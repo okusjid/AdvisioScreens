@@ -1,8 +1,12 @@
-//import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import React from 'react';
+import Routing from './routes/index';
 
-export default function App() {
+function App() {
   return (
-  <Signup />    
-  )
+    <div>
+      <Routing />
+    </div>
+  );
 }
+
+export default App;
