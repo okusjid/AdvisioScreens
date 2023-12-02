@@ -5,10 +5,13 @@ import Home from '../pages/Home';
 import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+
 
 const Routing = () => {
   return (
     <Router>
+      <Header />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Login" element={<Login />} />
