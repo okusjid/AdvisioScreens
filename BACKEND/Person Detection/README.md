@@ -13,14 +13,6 @@ This project implements a Realtime People Detection System in a live video feed 
 - PyTorch (for YOLOv5 model)
 
 ## Installation
-
-1. Clone the repository:
-
-```bash
-git clone <https://github.com/Jacob-Pitsenberger/Filtered-Person-Detection-in-Video-Stream-with-YoloV8-or-YoloV5.git>
-cd <Filtered-Person-Detection-in-Video-Stream-with-YoloV8-or-YoloV5>
-```
-
 1. Install the required packages:
 
 ```bash
@@ -44,14 +36,5 @@ You can adjust the confidence threshold for person detection by modifying the CO
 
 YOLOv5: A lightweight version of YOLO that provides real-time inference with good accuracy.
 YOLOv8: A more advanced version of YOLO that may offer better performance at the cost of increased complexity and inference time.
-
-## License
-
-This project is licensed under the MIT License.
-
-## Acknowledgments
-
-Special thanks to the developers of the YOLO models and the Ultralytics library for making this project possible.
-
 
 
