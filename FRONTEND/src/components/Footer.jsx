@@ -20,7 +20,7 @@ const Footer = () => {
             <Link to="/licensing" className="hover:underline">Licensing</Link>
           </li>
           <li className="slide-in mx-4">
-            <Link to="/contact" className="hover:underline">Contact</Link>
+            <Link to="/contacts" className="hover:underline">Contact</Link>
           </li>
         </ul>
       </div>

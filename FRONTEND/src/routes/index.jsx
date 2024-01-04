@@ -6,6 +6,7 @@ import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Contact from '../pages/Contacts';
 
 
 const Routing = () => {
@@ -16,6 +17,7 @@ const Routing = () => {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Login" element={<Login />} />
         <Route exact path="/Signup" element={<Signup />} />
+        <Route exact path='/Contacts' element={<Contact/>}/>
         {/* other routes */}
       </Routes>
       <Footer />
