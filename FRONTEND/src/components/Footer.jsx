@@ -1,25 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../animations.css';
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-gray-800 shadow">
+    <footer className="fixed inset-x-0 bottom-0 bg-white dark:bg-gray-800 shadow">
       <div className="w-full p-4 md:flex md:items-center md:justify-between">
-        <span className="block text-sm text-center text-gray-500 dark:text-gray-400">
+        <span className="block text-sm text-center text-gray-500 dark:text-gray-400 fade-in">
           © 2023 <Link to="/" className="hover:underline">AdvisoScreens</Link>. All Rights Reserved.
         </span>
         <ul className="flex flex-wrap justify-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400">
-          <li>
-            <Link to="/about" className="hover:underline mx-4">About</Link>
+          <li className="slide-in mx-4">
+            <Link to="/about" className="hover:underline">About</Link>
           </li>
-          <li>
-            <Link to="/privacy-policy" className="hover:underline mx-4">Privacy Policy</Link>
+          <li className="slide-in mx-4">
+            <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
           </li>
-          <li>
-            <Link to="/licensing" className="hover:underline mx-4">Licensing</Link>
+          <li className="slide-in mx-4">
+            <Link to="/licensing" className="hover:underline">Licensing</Link>
           </li>
-          <li>
-            <Link to="/contact" className="hover:underline mx-4">Contact</Link>
+          <li className="slide-in mx-4">
+            <Link to="/contact" className="hover:underline">Contact</Link>
           </li>
         </ul>
       </div>
