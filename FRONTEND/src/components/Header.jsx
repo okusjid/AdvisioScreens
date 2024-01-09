@@ -16,16 +16,19 @@ const Header = () => {
           <div className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
-                <Link to="/locations" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:text-gray-700 lg:p-0 dark:text-white">Locations</Link>
+                <Link to="/Howitworks" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent  lg:p-0 dark:text-white">How Does it Works?</Link>
               </li>
               <li>
-                <Link to="/cost" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:text-gray-700 lg:p-0 dark:text-white">Cost</Link>
+                <Link to="/locations" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent  lg:p-0 dark:text-white">Locations</Link>
               </li>
               <li>
-                <Link to="/media-owners" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:text-gray-700 lg:p-0 dark:text-white">Media Owners</Link>
+                <Link to="/cost" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent  lg:p-0 dark:text-white">Cost</Link>
               </li>
               <li>
-                <Link to="/about" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent lg:text-gray-700 lg:p-0 dark:text-white">About</Link>
+                <Link to="/media-owners" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent  lg:p-0 dark:text-white">Media Owners</Link>
+              </li>
+              <li>
+                <Link to="/about" className="block py-2 pr-4 pl-3 text-gray-700 rounded lg:bg-transparent  lg:p-0 dark:text-white">About</Link>
               </li>
             </ul>
           </div>
