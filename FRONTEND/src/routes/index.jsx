@@ -7,6 +7,7 @@ import Login from '../pages/Login';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Contact from '../pages/Contacts';
+import AboutPage from '../pages/AboutPage';
 
 const Routing = () => {
   return (
@@ -17,6 +18,8 @@ const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/contacts" element={<Contact />} />
+        <Route path="/about" element={<AboutPage />} />
+        
         {/* other routes */}
       </Routes>
       <Footer />
