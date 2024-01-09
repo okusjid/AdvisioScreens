@@ -8,16 +8,15 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Contact from '../pages/Contacts';
 
-
 const Routing = () => {
   return (
     <Router>
       <Header />
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/Login" element={<Login />} />
-        <Route exact path="/Signup" element={<Signup />} />
-        <Route exact path='/Contacts' element={<Contact/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/contacts" element={<Contact />} />
         {/* other routes */}
       </Routes>
       <Footer />
