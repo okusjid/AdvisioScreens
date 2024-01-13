@@ -7,6 +7,7 @@ const HeroSection = () => {
     <section className="bg-black text-white text-center py-24 px-6 bg-cover bg-center" 
              style={{ 
                backgroundImage: `url(${billboardImage})`,
+               //backgroundSize : "90%"  
              }}>
       <h1 style={{textAlign: "left", fontSize: 52}} className="font-extrabold text-red-600 mb-4 leading-tight ">
         Elevate Your Brand Visibility
