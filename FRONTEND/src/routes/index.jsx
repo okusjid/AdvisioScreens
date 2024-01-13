@@ -9,21 +9,27 @@ import Header from '../components/Header';
 import Contact from '../pages/Contacts';
 import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
+
 const Routing = () => {
   return (
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/contacts" element={<Contact />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path='/media-owners' element={<MediaOwner />} />
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Header />
         
-        {/* other routes */}
-      </Routes>
-      <Footer />
+        <main style={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/contacts" element={<Contact />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path='/media-owners' element={<MediaOwner />} />
+            {/* other routes */}
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
     </Router>
   );
 };
