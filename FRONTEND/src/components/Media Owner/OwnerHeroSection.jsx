@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import board from "../assets/Board.jpg"; // Import the image
+import board from "../../assets/Board.jpg"; // Import the image
 
 const OwnerHeroSection = () => {
   return (

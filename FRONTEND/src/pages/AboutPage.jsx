@@ -1,7 +1,7 @@
 import React from 'react';
-import AboutSection from '../components/AboutSection';
-import TeamSection from '../components/TeamSection';
-import ValuesSection from '../components/ValuesSection';
+import AboutSection from '../components/About/AboutSection';
+import TeamSection from '../components/About/TeamSection';
+import ValuesSection from '../components/About/ValuesSection';
 
 const AboutPage = () => {
   return (

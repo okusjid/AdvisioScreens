@@ -1,5 +1,5 @@
 import React from 'react';
-import ceoImage from '../assets/CEO.jpg'; // Path to CEO's image
+import ceoImage from '../../assets/CEO.jpg'; // Path to CEO's image
 
 const CEOMessage = () => {
     return (

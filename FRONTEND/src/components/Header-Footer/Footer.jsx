@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../animations.css';
+import '../../animations.css';
 
 const Footer = () => {
   return (

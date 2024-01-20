@@ -1,9 +1,9 @@
 // TestimonialsSection.js
 import React, { useState } from 'react';
 import { FaQuoteLeft, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import buisnessman1 from '../assets/Buisnessman1.jpeg'
-import buisnessman2 from '../assets/Buisnessman2.jpeg'
-import buisnessman3 from '../assets/Buisnessman3.jpg'
+import buisnessman1 from '../../assets/Buisnessman1.jpeg'
+import buisnessman2 from '../../assets/Buisnessman2.jpeg'
+import buisnessman3 from '../../assets/Buisnessman3.jpg'
 
 
 

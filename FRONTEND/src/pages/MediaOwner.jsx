@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import OwnerHeroSection from "../components/OwnerHeroSection";
-import BenefitsSection from "../components/BenefitSections";
-import ContactSection from "../components/ContactSec";
-import CEOMessage from "../components/CeoMessage";
+import OwnerHeroSection from "../components/Media Owner/OwnerHeroSection";
+import BenefitsSection from "../components/Media Owner/BenefitSections";
+import ContactSection from "../components/Media Owner/ContactSec";
+import CEOMessage from "../components/Media Owner/CeoMessage";
 
 const MediaOwner = () => {
     return (
