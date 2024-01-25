@@ -75,10 +75,15 @@ WSGI_APPLICATION = 'advisioscreens.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'AdvisioScreens',          # Replace with your PostgreSQL database name
+        'USER': 'Usjid',          # Replace with your PostgreSQL username
+        'PASSWORD': 'admin',  # Replace with your PostgreSQL password
+        'HOST': 'localhost',             # Set to your database host (use 'localhost' if it's on the same machine)
+        'PORT': '5433',                  # The default port for PostgreSQL is 5432
     }
 }
+
 
 
 # Password validation
