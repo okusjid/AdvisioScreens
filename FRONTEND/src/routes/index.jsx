@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { SignedIn } from '@clerk/clerk-react';
 
 import Home from '../pages/Home';
 import Signup from '../pages/Signup';
@@ -23,7 +24,16 @@ const Routing = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/contacts" element={<Contact />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path='/media-owners' element={<MediaOwner />} />
+            <Route path="/media-owners" element={<MediaOwner />}/>
+            {/* Protect this route or any other routes that require authentication */}
+            {/* <Route 
+              path='/media-owners' 
+              element={
+                <SignedIn>
+                  <MediaOwner />
+                </SignedIn>
+              } 
+            /> */}
             {/* other routes */}
           </Routes>
         </main>
