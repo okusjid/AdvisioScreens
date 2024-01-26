@@ -10,6 +10,7 @@ import Header from '../components/Header-Footer/Header';
 import Contact from '../pages/Contacts';
 import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
+import ErrorPage from '../pages/ErrorPage';
 
 const Routing = () => {
   return (
@@ -25,6 +26,7 @@ const Routing = () => {
             <Route path="/contacts" element={<Contact />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/media-owners" element={<MediaOwner />}/>
+            <Route path="/error" element={<ErrorPage/>}/>
             {/* Protect this route or any other routes that require authentication */}
             {/* <Route 
               path='/media-owners' 
