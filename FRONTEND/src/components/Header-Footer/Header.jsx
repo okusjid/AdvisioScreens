@@ -62,8 +62,8 @@ const Header = () => {
        {showSignIn && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden transform transition-all ease-in-out duration-500 scale-95">
-            <div className="px-6 py-4">
-              <div className="text-lg font-medium text-gray-900">Sign In</div>
+            <div>
+              <div className="text-lg font-medium text-gray-900 flex justify-center font-bold">Sign In</div>
               <SignIn />
             </div>
             <div className="px-6 py-3 bg-gray-50 flex justify-end">
