@@ -48,7 +48,7 @@ const Header = () => {
           {/* Right Section - User Management Buttons */}
           <div className="flex justify-end space-x-8">
             <SignedOut>
-              <button class="text-red-500 dark:text-red-300 hover:bg-red-50 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">Sign In</button>
+              <button onClick={toggleSignIn} className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Sign In</button>
             </SignedOut>
             <SignedIn>
               <UserButton className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none dark:focus:ring-blue-800" />
