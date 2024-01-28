@@ -7,7 +7,7 @@ import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import Footer from '../components/Header-Footer/Footer';
 import Header from '../components/Header-Footer/Header';
-import Contact from '../pages/Contacts';
+import Contact from '../pages/Contact';
 import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
 import ErrorPage from '../pages/ErrorPage';
@@ -23,7 +23,7 @@ const Routing = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/contacts" element={<Contact />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/media-owners" element={<MediaOwner />}/>
             <Route path="/error" element={<ErrorPage/>}/>

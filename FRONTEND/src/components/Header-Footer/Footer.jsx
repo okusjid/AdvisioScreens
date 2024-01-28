@@ -17,7 +17,7 @@ const Footer = () => {
             <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
           </li>
           <li className="slide-in mx-4">
-            <Link to="/contacts" className="hover:underline">Contact</Link>
+            <Link to="/contact" className="hover:underline">Contact</Link>
           </li>
         </ul>
       </div>
