@@ -29,7 +29,7 @@ const Header = () => {
           {/* Center Section - Navigation Links */}
           <ul className="hidden lg:flex flex-grow justify-center space-x-8">
             <li>
-              <Link to="/Howitworks" className="py-2 px-4 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white">How It Works?</Link>
+              <Link to="/howitworks" className="py-2 px-4 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white">How It Works?</Link>
             </li>
             <li>
               <Link to="/locations" className="py-2 px-4 text-gray-700 rounded lg:bg-transparent lg:p-0 dark:text-white">Locations</Link>
