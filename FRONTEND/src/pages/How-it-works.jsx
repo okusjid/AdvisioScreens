@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Stepper from '../components/How It Works/Stepper'; 
 import Testimonials from '../components/Home/Testimonials'; 
-import Tag from '../components/Home/Tagline'; 
+import Tag from '../components/How It Works/Tagline'; 
 import HeroSection from '../components/How It Works/hero';
 const Howitworks = () =>
 {
