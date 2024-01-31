@@ -29,30 +29,7 @@ const HeroSection = () => {
         zIndex: 0,
     };
 
-    const contentStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        color: 'white',
-        textAlign: 'center',
-        zIndex: 2,
-        animation: 'comeIn 1.5s ease-out forwards',
-    };
-
-    const headingStyle = {
-        fontSize: '2.5rem',
-        fontWeight: '600',
-        marginBottom: '0.5rem',
-        letterSpacing: '1px',
-    };
-
-    const subtitleStyle = {
-        fontSize: '1.25rem',
-        fontWeight: '400',
-        letterSpacing: '0.5px',
-    };
-
+  
     return (
         <div style={containerStyle}>
             <video autoPlay loop muted style={heroVideoStyle}>
