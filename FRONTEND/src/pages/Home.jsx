@@ -12,7 +12,7 @@ const Home = () => {
     <>    
       <HeroSection />
       <FeaturesSection />
-      <Tagline />
+      <Tagline Tag1="Unleashing Potential" Tag2="One Business at a Time." Tag3="Transforming Visions into Victories."/>
       <StatsSection />
       <CTASection />
       <TestimonialsSection />
