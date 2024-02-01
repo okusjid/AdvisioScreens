@@ -14,7 +14,7 @@ const Footer = () => {
             <Link to="/Gallary" className="hover:underline">Gallary</Link>
           </li>
           <li className="slide-in mx-4">
-            <Link to="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+            <Link to="/Privacy" className="hover:underline">Privacy Policy</Link>
           </li>
           <li className="slide-in mx-4">
             <Link to="/contact" className="hover:underline">Contact</Link>

@@ -12,12 +12,16 @@ import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
 import ErrorPage from '../pages/ErrorPage';
 
+import Privacy from '../components/Privacy Policy/Privacy';
+
 const Routing = () => {
   return (
     <Router>
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
         <Header />
-        
+
         <main style={{ flex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -25,8 +29,10 @@ const Routing = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/media-owners" element={<MediaOwner />}/>
-            <Route path="/error" element={<ErrorPage/>}/>
+            <Route path="/media-owners" element={<MediaOwner />} />
+            <Route path="/error" element={<ErrorPage />} />
+            <Route path="/media-owners" element={<MediaOwner />} />
+            <Route path="/privacy" element={<Privacy/>} />
             {/* Protect this route or any other routes that require authentication */}
             {/* <Route 
               path='/media-owners' 
