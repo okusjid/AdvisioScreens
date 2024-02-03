@@ -14,6 +14,7 @@ import ErrorPage from '../pages/ErrorPage';
 import Howitworks from '../pages/How-it-works'; 
 
 import Privacy from '../components/Privacy Policy/Privacy';
+import Gallery from '../components/gallery/Gallery';
 
 const Routing = () => {
   return (
@@ -34,9 +35,10 @@ const Routing = () => {
             <Route path="/error" element={<ErrorPage/>}/>
             <Route path='/howitworks' element={<Howitworks />} />
             <Route path='/privacy' element={<Privacy />} />
+            <Route path='/Gallery' element={<Gallery/>} />
             {/* Protect this route or any other routes that require authentication */}
             {/* <Route 
-              path='/media-owners' 
+              path='/media-ownegrs' 
               element={
                 <SignedIn>
                   <MediaOwner />

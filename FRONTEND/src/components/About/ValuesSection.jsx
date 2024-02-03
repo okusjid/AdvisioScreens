@@ -5,6 +5,7 @@ import {
   FaMarkdown,
   FaRegChartBar,
   FaSmile,
+  FaPlayCircle,
   FaKeycdn,
 } from "react-icons/fa"; // Import icons from 'react-icons'
 
@@ -17,8 +18,9 @@ const ValuesSection = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
           {/* Benefit 1 */}
+         
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-            <FaMarkdown className="text-4xl text-blue-600 mx-auto mb-4" />
+            <FaPlayCircle className="text-4xl text-blue-600 mx-auto mb-4" />
             <h3 className="text-2xl font-semibold mb-3">Try it</h3>
           </div>
           {/* Benefit 2 */}
@@ -31,7 +33,9 @@ const ValuesSection = () => {
           {/* Benefit 3 */}
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <FaRegChartBar className="text-4xl text-blue-600 mx-auto mb-4" />
-            <h3 className="text-2xl font-semibold mb-3">Make out-of-Home easy.</h3>
+            <h3 className="text-2xl font-semibold mb-3">
+              Make out-of-Home easy.
+            </h3>
           </div>
           {/* Benefit 4 */}
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">

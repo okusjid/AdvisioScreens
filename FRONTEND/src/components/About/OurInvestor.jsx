@@ -1,7 +1,12 @@
 import React from "react";
 import hec from "../../assets/hec.png"; // Update the path
 import fast from "../../assets/fast.png"; // Update the path
-
+import pakweel from "../../assets/pakweel.png"; // Update the path
+import nbp from "../../assets/nbp.png"; // Update the path
+import psl from "../../assets/psl.png"; // Update the path
+import lq from "../../assets/lq.png"; // Update the path
+import nayapak from "../../assets/nayapak.png"; // Update the path
+import colgate from "../../assets/colgate.png"; // Update the path
 const OurInvestor = () => {
   // Import logos from local storage
   // Add more logos as needed
@@ -44,6 +49,48 @@ const OurInvestor = () => {
             <img
               className="object-contain w-full h-20 mx-auto"
               src={fast}
+              alt=""
+            />
+          </div>
+          <div className="bg-white h-20 w-50 flex shadow-lg items-center justify-center">
+            <img
+              className="object-contain w-full h-20 mx-auto"
+              src={psl}
+              alt=""
+            />
+          </div>
+          <div className="bg-white h-20 w-50 flex shadow-lg items-center justify-center">
+            <img
+              className="object-contain w-full h-20 mx-auto"
+              src={nbp}
+              alt=""
+            />
+          </div>
+          <div className="bg-white h-20 w-50 flex shadow-lg items-center justify-center">
+            <img
+              className="object-contain w-full h-20 mx-auto"
+              src={lq}
+              alt=""
+            />
+          </div>
+          <div className="bg-white h-20 w-50 flex shadow-lg items-center justify-center">
+            <img
+              className="object-contain w-full h-20 mx-auto"
+              src={pakweel}
+              alt=""
+            />
+          </div>
+          <div className="bg-white h-20 w-50 flex shadow-lg items-center justify-center">
+            <img
+              className="object-contain w-full h-20 mx-auto"
+              src={colgate}
+              alt=""
+            />
+          </div>
+          <div className="bg-white h-20 w-50 flex shadow-lg items-center justify-center">
+            <img
+              className="object-contain w-full h-20 mx-auto"
+              src={nayapak}
               alt=""
             />
           </div>
