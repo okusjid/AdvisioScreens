@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  SignIn,
-  SignOutButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/clerk-react';
+import { SignedIn, SignedOut, UserButton, useClerk } from '@clerk/clerk-react';
 
 const Header = () => {
-  const [showSignIn, setShowSignIn] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
-
-  const toggleSignIn = () => setShowSignIn(!showSignIn);
-  const toggleSignUp = () => setShowSignUp(!showSignUp);
+  const { openSignIn, signOut } = useClerk();
 
   return (
     <header>
@@ -46,33 +36,17 @@ const Header = () => {
           </ul>
 
           {/* Right Section - User Management Buttons */}
-          <div className="flex justify-end space-x-8">
+          <div className="flex items-center space-x-4">
             <SignedOut>
-              <button onClick={toggleSignIn} className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Sign In</button>
+              <button onClick={() => openSignIn({})} className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Sign In</button>
             </SignedOut>
             <SignedIn>
               <UserButton className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none dark:focus:ring-blue-800" />
-              <SignOutButton className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-500 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-800" />
+              <button onClick={() => signOut()} className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-500 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-800">Sign Out</button>
             </SignedIn>
           </div>
         </div>
       </nav>
-
-       {/* SignIn Modal */}
-       {showSignIn && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-auto overflow-hidden transform transition-all ease-in-out duration-500 scale-95">
-            <div>
-              <div className="text-lg font-medium text-gray-900 flex justify-center font-bold">Sign In</div>
-              <SignIn />
-            </div>
-            <div className="px-6 py-3 bg-gray-50 flex justify-end">
-              <button onClick={toggleSignIn} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Close</button>
-            </div>
-          </div>
-        </div>
-      )}
-      
     </header>
   );
 };
