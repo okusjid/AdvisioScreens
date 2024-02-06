@@ -22,7 +22,7 @@ const Header = () => {
           {/* Left Section - Logo */}
           <div className="flex justify-start">
             <Link to="/" className="flex items-center">
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">AdvisoScreens</span>
+              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">AdvisioScreens</span>
             </Link>
           </div>
 
