@@ -12,6 +12,7 @@ import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
 import ErrorPage from '../pages/ErrorPage';
 import Howitworks from '../pages/How-it-works'; 
+import Admin from '../pages/Admin/Admin-Main';
 
 const Routing = () => {
   return (
@@ -29,6 +30,7 @@ const Routing = () => {
             <Route path="/media-owners" element={<MediaOwner />}/>
             <Route path="/error" element={<ErrorPage/>}/>
             <Route path='/howitworks' element={<Howitworks />}/>
+            <Route path='/admin' element={<Admin/>} />
             {/* Protect this route or any other routes that require authentication */}
             {/* <Route 
               path='/media-owners' 
