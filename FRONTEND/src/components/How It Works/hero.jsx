@@ -1,5 +1,5 @@
 import React from 'react';
-import clip from '../../../../BACKEND/AdvisioScreens/static/videos/how-it-works.mp4';
+import clip from './../../assets/Videos/how-it-works.mp4';
 
 const HeroSection = () => {
     const containerStyle = {

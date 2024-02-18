@@ -12,6 +12,19 @@ import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
 import ErrorPage from '../pages/ErrorPage';
 import Howitworks from '../pages/How-it-works'; 
+import Admin from '../pages/Admin/Admin';
+
+const DefaultLayout = ({ children }) => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Header />
+      <main style={{ flex: 1 }}>
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 import Privacy from '../components/Privacy Policy/Privacy';
 import Gallery from '../components/gallery/Gallery';
