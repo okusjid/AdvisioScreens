@@ -14,8 +14,11 @@ import ErrorPage from '../pages/ErrorPage';
 import Howitworks from '../pages/How-it-works'; 
 
 import AdminLayout from '../pages/Admin/Admin';
+import ErrorPage1 from '../pages/Admin/Errorpage';
+
 import UserManagementPage from '../components/Admin/UserManagementPage';
 import AdminContactMessages from '../components/Admin/AdminContactMessages';
+import AdminHomePage from '../components/Admin/Admin-home';
 
 const DefaultLayout = ({ children }) => {
   return (
@@ -44,7 +47,8 @@ const Routing = () => {
         <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>
           <Route path="contact-messages" element={<AdminContactMessages />} />
           <Route path='user-management' element={<UserManagementPage />} />
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="" element={<AdminHomePage />} />
+          <Route path="*" element={<ErrorPage1 />} />
 
           {/* Add other admin nested routes here */}
         </Route>

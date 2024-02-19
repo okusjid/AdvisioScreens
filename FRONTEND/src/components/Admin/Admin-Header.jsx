@@ -1,5 +1,6 @@
 import React from 'react';
 import { SignedIn, UserButton, useUser } from '@clerk/clerk-react';
+import { Link } from 'react-router-dom';
 
 const AdminHeader = () => {
     const { user, isLoaded, isError } = useUser(); // Destructure to include loading and error states
@@ -32,16 +33,17 @@ const AdminHeader = () => {
     // Handling loading and error states
     let welcomeMessage = "Loading..."; // Default message during loading
     if (isLoaded && !isError && user) {
-        welcomeMessage = `Welcome, ${user.fullName}`;
+        welcomeMessage = `Welcome, ${user.fullName || user.firstName}`; // Added fallback to firstName
     } else if (isError) {
         welcomeMessage = "Error loading user info"; // Message in case of an error
     }
 
     return (
         <header style={headerStyles}>
-            <h1 style={titleStyle}>AdvisioScreens</h1>
-            <h1 style={titleStyle}>Admin Dashboard</h1>
-            <div style={{display: 'flex', alignItems: 'center'}}>
+            <Link to="/admin" style={{ textDecoration: 'none' }}>
+                <h1 style={titleStyle}>AdvisioScreens</h1>
+            </Link>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
                 <SignedIn>
                     <span style={welcomeTextStyle}>
                         {welcomeMessage}
