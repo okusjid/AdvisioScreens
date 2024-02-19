@@ -12,7 +12,9 @@ import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
 import ErrorPage from '../pages/ErrorPage';
 import Howitworks from '../pages/How-it-works'; 
-import Admin from '../pages/Admin/Admin';
+
+import AdminLayout from '../pages/Admin/Admin';
+import AdminContactMessages from '../components/Admin/AdminContactMessages';
 
 const DefaultLayout = ({ children }) => {
   return (
@@ -38,7 +40,12 @@ const Routing = () => {
         <Route path="/media-owners" element={<DefaultLayout><MediaOwner /></DefaultLayout>}/>
         <Route path="/error" element={<DefaultLayout><ErrorPage /></DefaultLayout>}/>
         <Route path='/howitworks' element={<DefaultLayout><Howitworks /></DefaultLayout>} />
-        <Route path='/admin' element={<Admin />} />
+        <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>
+          <Route path="contact-messages" element={<AdminContactMessages />} />
+          <Route path="*" element={<ErrorPage />} />
+
+          {/* Add other admin nested routes here */}
+        </Route>
         <Route path="*" element={<DefaultLayout><ErrorPage /></DefaultLayout>} />
         {/* Protect this route or any other routes that require authentication */}
         {/* <Route 
