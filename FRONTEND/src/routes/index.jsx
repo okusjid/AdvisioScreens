@@ -39,6 +39,7 @@ const Routing = () => {
         <Route path="/error" element={<DefaultLayout><ErrorPage /></DefaultLayout>}/>
         <Route path='/howitworks' element={<DefaultLayout><Howitworks /></DefaultLayout>} />
         <Route path='/admin' element={<Admin />} />
+        <Route path="*" element={<DefaultLayout><ErrorPage /></DefaultLayout>} />
         {/* Protect this route or any other routes that require authentication */}
         {/* <Route 
           path='/media-owners' 
