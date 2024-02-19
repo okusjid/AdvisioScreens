@@ -1,6 +1,5 @@
 import React from 'react';
 import { SignedIn, UserButton, useUser } from '@clerk/clerk-react';
-import { FaUserCircle } from 'react-icons/fa'; // Importing FontAwesome user icon
 
 const AdminHeader = () => {
     const { user, isLoaded, isError } = useUser(); // Destructure to include loading and error states
