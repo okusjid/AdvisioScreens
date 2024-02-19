@@ -2,7 +2,6 @@ import React from 'react';
 import AdminSidebar from '../../components/Admin/Admin-Sidebar'; // Adjust the import path as necessary
 import AdminHeader from '../../components/Admin/Admin-Header';
 
-// import AdminFooter from './AdminFooter'; // Ensure you have a footer component
 // Other imports...
 
 const AdminLayout = () => {

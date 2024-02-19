@@ -3,7 +3,7 @@ import { SignedIn, UserButton, useUser } from '@clerk/clerk-react';
 import { FaUserCircle } from 'react-icons/fa'; // Importing FontAwesome user icon
 
 const AdminHeader = () => {
-    const { user } = useUser(); // Destructure to get the first name of the user
+    const { user, isLoaded, isError } = useUser(); // Destructure to include loading and error states
 
     // Enhanced style object for dynamic styling
     const headerStyles = {
@@ -25,21 +25,27 @@ const AdminHeader = () => {
     const welcomeTextStyle = {
         display: 'flex',
         alignItems: 'center',
-        fontSize: '1rem', // Adjusted font size for the welcome text
-        color: '#FFF', // Ensuring the text is white for readability
-        marginRight: '20px', // Adding some space before the UserButton
+        fontSize: '1rem',
+        color: '#FFF',
+        marginRight: '20px',
     };
+
+    // Handling loading and error states
+    let welcomeMessage = "Loading..."; // Default message during loading
+    if (isLoaded && !isError && user) {
+        welcomeMessage = `Welcome, ${user.fullName}`;
+    } else if (isError) {
+        welcomeMessage = "Error loading user info"; // Message in case of an error
+    }
 
     return (
         <header style={headerStyles}>
             <h1 style={titleStyle}>AdvisioScreens</h1>
-                    <h1 style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white', textAlign: 'center' }}>Admin Dashboard</h1>
+            <h1 style={titleStyle}>Admin Dashboard</h1>
             <div style={{display: 'flex', alignItems: 'center'}}>
                 <SignedIn>
-                {/* Add text title of Admin Dashboard */}
-                 
                     <span style={welcomeTextStyle}>
-                        Welcome, {user.fullName} 
+                        {welcomeMessage}
                     </span>
                     <UserButton className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none dark:focus:ring-blue-800" />
                 </SignedIn>
