@@ -12,7 +12,12 @@ import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
 import ErrorPage from '../pages/ErrorPage';
 import Howitworks from '../pages/How-it-works'; 
+import Dashboard1 from '../components/Dashboard/Dashboard1';
+import Cost from '../components/Cost/Cost';
 import Admin from '../pages/Admin/Admin';
+
+import Privacy from "../components/Privacy Policy/Privacy";
+import Gallery from "../components/gallery/Gallery";
 
 const DefaultLayout = ({ children }) => {
   return (
@@ -25,9 +30,6 @@ const DefaultLayout = ({ children }) => {
     </div>
   );
 };
-
-import Privacy from '../components/Privacy Policy/Privacy';
-import Gallery from '../components/gallery/Gallery';
 
 const Routing = () => {
   return (
@@ -44,11 +46,14 @@ const Routing = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/media-owners" element={<MediaOwner />}/>
-            <Route path="/error" element={<ErrorPage/>}/>
-            <Route path='/howitworks' element={<Howitworks />} />
-            <Route path='/privacy' element={<Privacy />} />
-            <Route path='/Gallery' element={<Gallery/>} />
+            <Route path="/media-owners" element={<MediaOwner />} />
+            <Route path="/error" element={<ErrorPage />} />
+            <Route path="/howitworks" element={<Howitworks />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/Gallery" element={<Gallery />} />
+            <Route path="/cost" element={<Cost />} />
+            <Route path="/Dashboard" element={<Dashboard1/>} />
+            
             {/* Protect this route or any other routes that require authentication */}
             {/* <Route 
               path='/media-ownegrs' 
