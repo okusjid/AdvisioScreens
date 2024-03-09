@@ -9,7 +9,11 @@
 
 .sidebar-entrance {
   animation: fadeIn 0.5s ease-out forwards;
+  position: sticky; /* Updated */
+  top: 0; /* Top alignment */
+  z-index: 1000; /* Ensure it's above other content */
 }
+
 
 .menu-item {
   position: relative;
