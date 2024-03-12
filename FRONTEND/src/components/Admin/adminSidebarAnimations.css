@@ -1,0 +1,50 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sidebar-entrance {
+  animation: fadeIn 0.5s ease-out forwards;
+  position: sticky; /* Updated */
+  top: 0; /* Top alignment */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+
+.menu-item {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s ease;
+}
+
+.menu-item:hover::before, .menu-item:focus::before {
+  left: 100%;
+}
+
+.menu-item:hover, .menu-item:focus {
+  color: #FFF; /* Adjust based on your theme */
+}
+
+.icon-animation {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.menu-item:hover .icon-animation, .menu-item:focus .icon-animation {
+  transform: scale(1.2);
+}
