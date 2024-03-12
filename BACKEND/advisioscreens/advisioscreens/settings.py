@@ -84,10 +84,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'AdvisioScreens',
-        'USER': 'Usjid',
-        'PASSWORD': 'admin',
+        'USER': 'postgres',
+        'PASSWORD': '123456',
         'HOST': 'localhost',   # Set to empty string for localhost.
-        'PORT': '5433',            # Set to empty string for default.
+        'PORT': '5432',            # Set to empty string for default.
     }
 }
 
