@@ -68,7 +68,7 @@ function WelcomeBanner() {
 
       {/* Content */}
       <div className="relative">
-        <h1 className="text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-bold mb-1">
+        <h1 className="text-2xl md:text-3xl text-slate-800 dark:text-slate-800 font-bold mb-1">
           Welcome to AdvisioScreens 👋
         </h1>
         <p className="dark:text-indigo-200">

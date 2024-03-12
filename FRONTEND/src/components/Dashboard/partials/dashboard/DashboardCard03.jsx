@@ -90,11 +90,11 @@ function DashboardCard03() {
             </li>
           </EditMenu>
         </header>
-        <h2 className="text-lg font-semibold text-dark:text-slate-800 mb-2">Acme Professional</h2>
-        <div className="text-xs font-semibold text-dark:text-slate-400 uppercase mb-1">Sales</div>
+        <h2 className="text-lg font-semibold text-dark:text-slate-800 mb-2">Yearly Impressions</h2>
+        <div className="text-xs font-semibold text-dark:text-slate-400 uppercase mb-1"></div>
         <div className="flex items-start">
-          <div className="text-3xl font-bold text-dark:text-slate-800 mr-2">$9,962</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">+49%</div>
+          <div className="text-3xl font-bold text-dark:text-slate-800 mr-2">9,962</div>
+          <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">49%</div>
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}

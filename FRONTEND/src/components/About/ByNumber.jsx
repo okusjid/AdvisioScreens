@@ -12,9 +12,9 @@ const ByNumber = () => {
   useEffect(() => {
     const updateCounts = () => {
       setCounts({
-        countto1: 250,
+        countto1: 570,
         countto2: 12,
-        countto3: 2600,
+        countto3: 320,
         countto4: 18000,
       });
     };
@@ -73,11 +73,11 @@ const ByNumber = () => {
                     end={counts.countto3}
                     duration={6}
                     separator=","
-                    suffix="k+"
+                    
                   />
                 </h3>
                 <p className="text-base font-medium leading-7 text-center text-dark-grey-600">
-                  Global Partners
+                  Global Clients
                 </p>
               </div>
               <div className="flex flex-col items-center">

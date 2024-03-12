@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Gallery.css"; // Import CSS file for animations
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
+  const isInitialMount = useRef(true); // Ref to track initial mount
 
   useEffect(() => {
-    fetchRandomImages();
-  }, []); // Fetch random images when the component mounts
+    // Fetch random images only on the initial mount
+    if (isInitialMount.current) {
+      fetchRandomImages();
+      isInitialMount.current = false;
+    }
+  }, []); // Empty dependency array ensures the effect runs only once
 
   const fetchRandomImages = () => {
-    const apiUrl = "https://source.unsplash.com/random/800x600?advertising";
+    // Updated URL to fetch billboard-related images
+    const apiUrl = "https://source.unsplash.com/random/800x600?billboard";
 
     // Fetching 9 random images
-    const fetchPromises = Array.from({ length: 20 }, () => fetch(apiUrl));
+    const fetchPromises = Array.from({ length: 10 }, () => fetch(apiUrl));
 
     Promise.all(fetchPromises)
       .then((responses) =>

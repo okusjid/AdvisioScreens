@@ -27,10 +27,7 @@ const Top = () => {
                   different
                 </span>
               </h2>
-              <p className="text-base text-gray-900">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque it.
-              </p>
+            
             </div>
           </div>
           <div className="relative hidden lg:ml-32 lg:block lg:w-1/2">

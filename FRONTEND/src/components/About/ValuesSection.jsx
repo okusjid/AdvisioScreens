@@ -27,14 +27,14 @@ const ValuesSection = () => {
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <FaSmile className="text-4xl text-yellow-600 mx-auto mb-4" />
             <h3 className="text-2xl font-semibold mb-3">
-              Make Customers insanely happy.
+              Make Customers insanely happy
             </h3>
           </div>
           {/* Benefit 3 */}
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <FaRegChartBar className="text-4xl text-blue-600 mx-auto mb-4" />
             <h3 className="text-2xl font-semibold mb-3">
-              Make out-of-Home easy.
+              Make out-of-Home easy
             </h3>
           </div>
           {/* Benefit 4 */}
@@ -45,13 +45,13 @@ const ValuesSection = () => {
           {/* Benefit 5 */}
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <FaHardHat className="text-4xl text-blue-600 mx-auto mb-4" />
-            <h3 className="text-2xl font-semibold mb-3">Hard work wins.</h3>
+            <h3 className="text-2xl font-semibold mb-3">Hard work wins</h3>
           </div>
           {/* Benefit 6 */}
           <div className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
             <FaHeart className="text-4xl text-red-600 mx-auto mb-4" />
             <h3 className="text-2xl font-semibold mb-3">
-              Honest because we care.
+              Honest because we care
             </h3>
           </div>
         </div>

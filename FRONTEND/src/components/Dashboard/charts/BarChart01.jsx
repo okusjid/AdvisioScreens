@@ -160,7 +160,7 @@ function BarChart01({ data, width, height }) {
               labelContainer.style.display = "flex";
               labelContainer.style.alignItems = "center";
               const value = document.createElement("span");
-              value.classList.add("text-slate-800", "dark:text-slate-100");
+              value.classList.add("text-slate-800", "dark:text-slate-800");
               value.style.fontSize = tailwindConfig().theme.fontSize["3xl"][0];
               value.style.lineHeight =
                 tailwindConfig().theme.fontSize["3xl"][1].lineHeight;
