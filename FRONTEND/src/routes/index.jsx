@@ -12,14 +12,15 @@ import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
 import ErrorPage from '../pages/ErrorPage';
 import Howitworks from '../pages/How-it-works'; 
-
+import Cost from "../components/Cost/Cost";
 import AdminLayout from '../pages/Admin/Admin';
 import ErrorPage1 from '../pages/Admin/Errorpage';
 
 import UserManagementPage from '../components/Admin/UserManagementPage';
 import AdminContactMessages from '../components/Admin/AdminContactMessages';
 import AdminHomePage from '../components/Admin/Admin-home';
-
+import Gallery from "../components/gallery/Gallery";
+import Dashboard1 from '../components/Dashboard/Dashboard1';
 const DefaultLayout = ({ children }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -41,15 +42,23 @@ const Routing = () => {
         <Route path="/signup" element={<DefaultLayout><Signup /></DefaultLayout>} />
         <Route path="/contact" element={<DefaultLayout><Contact /></DefaultLayout>} />
         <Route path="/about" element={<DefaultLayout><AboutPage /></DefaultLayout>} />
+        
         <Route path="/media-owners" element={<DefaultLayout><MediaOwner /></DefaultLayout>}/>
         <Route path="/error" element={<DefaultLayout><ErrorPage /></DefaultLayout>}/>
         <Route path='/howitworks' element={<DefaultLayout><Howitworks /></DefaultLayout>} />
+        <Route path='/gallery' element={<DefaultLayout><Gallery /></DefaultLayout>} />
+        <Route path="/cost" element={<DefaultLayout><Cost /></DefaultLayout>} />
+        <Route path="/Dashboard" element={<Dashboard1/>} />
         <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>
+          
           <Route path="contact-messages" element={<AdminContactMessages />} />
           <Route path='user-management' element={<UserManagementPage />} />
+          
           <Route path="" element={<AdminHomePage />} />
           <Route path="*" element={<ErrorPage1 />} />
+         
 
+          
           {/* Add other admin nested routes here */}
         </Route>
         <Route path="*" element={<DefaultLayout><ErrorPage /></DefaultLayout>} />
