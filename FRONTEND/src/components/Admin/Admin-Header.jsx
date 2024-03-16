@@ -40,7 +40,7 @@ const AdminHeader = () => {
 
     return (
         <header style={headerStyles}>
-            <Link to="/admin" style={{ textDecoration: 'none' }}>
+            <Link to="/" style={{ textDecoration: 'none' }}>
                 <h1 style={titleStyle}>AdvisioScreens</h1>
             </Link>
             <div style={{ display: 'flex', alignItems: 'center' }}>

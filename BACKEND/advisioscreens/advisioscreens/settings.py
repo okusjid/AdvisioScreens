@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contact',
-    'ads',
-    'Feedback',
     'user',
     #'corsheaders',
 ]
@@ -84,10 +82,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'AdvisioScreens',
-        'USER': 'postgres',
-        'PASSWORD': '123456',
+        'USER': 'Usjid',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',   # Set to empty string for localhost.
-        'PORT': '5432',            # Set to empty string for default.
+        'PORT': '5433',            # Set to empty string for default.
     }
 }
 
