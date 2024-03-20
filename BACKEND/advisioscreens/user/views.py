@@ -1,3 +1,164 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+from .models import *
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.core import serializers
+from django.shortcuts import render, redirect
+from .models import *
+from rest_framework.parsers import MultiPartParser
+from rest_framework.views import APIView
+from django.http import JsonResponse
+from collections import defaultdict
 
-# Create your views here.
+
+class UploadImage(APIView):
+    parser_classes = [MultiPartParser]
+
+    def post(self, request):
+        print("UploadImage", request.data)
+        loc_name = request.data["loc"]
+        image = request.data["file"]
+        user_id = request.data["user_id"]
+        name = request.data["name"]
+        if name and image:  # Check if location and image are present
+            Upload.objects.create(
+                clerk_id=user_id, name=name, location=loc_name, item=image
+            )
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse(
+                {"success": False, "error": "Location or image missing"}, status=400
+            )
+
+
+class UploadVideo(APIView):
+    parser_classes = [MultiPartParser]
+
+    def post(self, request):
+
+        print("UploadVideo", request.data)
+        loc_name = request.data["loc"]
+        video = request.data["file"]
+        user_id = request.data["user_id"]
+        name = request.data["name"]
+        if name and video:
+            Upload.objects.create(
+                clerk_id=user_id, name=name, location=loc_name, item=video
+            )
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse(
+                {"success": False, "error": "Location or image missing"}, status=400
+            )
+
+
+def get_approved_images(request):
+    print("get_approved_images")
+    if "user_id" in request.GET:
+        user_images = Upload.objects.filter(
+            clerk_id=request.GET["user_id"], approved=True
+        )
+        images_data = []
+        for img in user_images:
+            print(img.item.url[8:])
+            images_data.append(
+                {
+                    "id": img.id,
+                    "name": img.name,
+                    "location": img.location,
+                    "image_url": img.item.url[8:],
+                }
+            )
+        return JsonResponse(images_data, safe=False)
+    else:
+        return JsonResponse({"error": "user_id parameter missing"}, status=400)
+
+
+def get_unapproved_images(request):
+    print("get_unapproved_images")
+    if "user_id" in request.GET:
+        user_images = Upload.objects.filter(
+            clerk_id=request.GET["user_id"], approved=False, rejected=False
+        )
+        images_data = []
+        for img in user_images:
+            print(img.item.url[8:])
+            images_data.append(
+                {
+                    "id": img.id,
+                    "name": img.name,
+                    "location": img.location,
+                    "image_url": img.item.url[8:],
+                }
+            )
+        return JsonResponse(images_data, safe=False)
+    else:
+        return JsonResponse({"error": "user_id parameter missing"}, status=400)
+
+
+def get_rejected_items(request):
+    print("get_unapproved_images")
+    if "user_id" in request.GET:
+        user_images = Upload.objects.filter(
+            clerk_id=request.GET["user_id"], rejected=True
+        )
+        images_data = []
+        for img in user_images:
+            print(img.item.url[8:])
+            img.approved = False
+            img.save()
+            images_data.append(
+                {
+                    "id": img.id,
+                    "name": img.name,
+                    "location": img.location,
+                    "image_url": img.item.url[8:],
+                }
+            )
+        return JsonResponse(images_data, safe=False)
+    else:
+        return JsonResponse({"error": "user_id parameter missing"}, status=400)
+
+
+class FeedbackView(APIView):
+    parser_classes = [MultiPartParser]
+
+    def post(self, request):
+
+        print("Feedback", request.data)
+        item_id = request.data["image_id"]
+        opt_id = request.data["option_id"]
+        user_id = request.data["user_id"]
+
+        if item_id and opt_id:
+            items = Upload.objects.get(clerk_id=user_id, id=item_id)
+            Feedback.objects.create(
+                item_id=Upload.objects.get(clerk_id=user_id, id=item_id),
+                option_id=opt_id,
+            )
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse(
+                {"success": False, "error": "Feedback params not found"}, status=400
+            )
+
+
+def get_feedback(request):
+    feedback_data = Feedback.objects.all()
+    feedback_counts = defaultdict(int)
+    feedback_list = []
+    for feedback in feedback_data:
+        if not feedback.item_id.rejected and feedback.item_id.approved:
+            feedback_list.append(
+                {
+                    "option_id": feedback.option_id,
+                    "item_id": feedback.item_id.id,
+                    "item_name": feedback.item_id.name,
+                }
+            )
+            feedback_counts[feedback.option_id] += 1
+    feedback = {
+        "feedback_data": feedback_list,
+        "feedback_counts": feedback_counts,
+    }
+    return JsonResponse(feedback)

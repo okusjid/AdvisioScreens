@@ -1,6 +1,6 @@
 import React from "react";
 
-function WelcomeBanner() {
+function WelcomeBanner( {title} ) {
   return (
     <div className="relative bg-indigo-200 dark:bg-indigo-500 p-4 sm:p-6 rounded-md overflow-hidden mb-8">
       {/* Background illustration */}
@@ -69,7 +69,7 @@ function WelcomeBanner() {
       {/* Content */}
       <div className="relative">
         <h1 className="text-2xl md:text-3xl text-slate-800 dark:text-slate-800 font-bold mb-1">
-          Welcome to AdvisioScreens 👋
+          {title} 👋
         </h1>
         <p className="dark:text-indigo-200">
           Where your brand's vision meets the world. Let's make every screen
