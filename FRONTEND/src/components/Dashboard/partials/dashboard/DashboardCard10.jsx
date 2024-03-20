@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import Image01 from "../../images/user-36-05.jpg";
 import Image02 from "../../images/user-36-06.jpg";
@@ -6,7 +7,11 @@ import Image03 from "../../images/user-36-07.jpg";
 import Image04 from "../../images/user-36-08.jpg";
 import Image05 from "../../images/user-36-09.jpg";
 
-function DashboardCard10() {
+import {useUser} from '@clerk/clerk-react';
+
+function DashboardCard10({images}) {
+  
+  const user = useUser();
   const customers = [
     {
       id: "0",
@@ -49,6 +54,7 @@ function DashboardCard10() {
       spent: "$1,890.66",
     },
   ];
+  
 
   return (
     <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
@@ -80,41 +86,76 @@ function DashboardCard10() {
             </thead>
             {/* Table body */}
             <tbody className="text-sm divide-y divide-slate-100 dark:divide-slate-700">
-              {customers.map((customer) => {
+              {images.map((image) => {
                 return (
-                  <tr key={customer.id}>
+                  <tr key={image.id}>
                     <td className="p-2 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
                           <img
                             className="rounded-full"
-                            src={customer.image}
+                            src={customers[0].image}
                             width="40"
                             height="40"
-                            alt={customer.name}
+                            alt={image.name}
                           />
                         </div>
                         <div className="font-medium text-slate-800 dark:text-slate-800">
-                          {customer.name}
+                        {image.name}
                         </div>
                       </div>
                     </td>
                     <td className="p-2 whitespace-nowrap">
-                      <div className="text-left">{customer.email}</div>
+                      <div className="text-left">NULL</div>
                     </td>
                     <td className="p-2 whitespace-nowrap">
                       <div className="text-left font-medium text-green-500">
-                        {customer.spent}
+                        NULL
                       </div>
                     </td>
                     <td className="p-2 whitespace-nowrap">
                       <div className="text-lg text-center">
-                        {customer.location}
+                        {image.location}
                       </div>
                     </td>
                   </tr>
                 );
               })}
+              {/* {videos.map((video) => {
+                return (
+                  <tr key={video.id}>
+                    <td className="p-2 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
+                          <img
+                            className="rounded-full"
+                            src={customers[0].image}
+                            width="40"
+                            height="40"
+                            alt={video.image_url.split('/').pop()}
+                          />
+                        </div>
+                        <div className="font-medium text-slate-800 dark:text-slate-800">
+                        {video.image_url.split('/').pop()}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-2 whitespace-nowrap">
+                      <div className="text-left">NULL</div>
+                    </td>
+                    <td className="p-2 whitespace-nowrap">
+                      <div className="text-left font-medium text-green-500">
+                        NULL
+                      </div>
+                    </td>
+                    <td className="p-2 whitespace-nowrap">
+                      <div className="text-lg text-center">
+                        {video.location}
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })} */}
             </tbody>
           </table>
         </div>

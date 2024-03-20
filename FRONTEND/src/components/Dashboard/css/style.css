@@ -8,3 +8,12 @@
 @import 'additional-styles/flatpickr.css';
 
 @import 'tailwindcss/utilities';
+
+.popup {
+    opacity: 0; /* Initially hide the elements */
+    transition: opacity 0.3s ease; /* Smoothly transition the opacity property */
+}
+
+.popup.show {
+    opacity: 1; /* Show the elements */
+}
