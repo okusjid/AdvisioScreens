@@ -1,62 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import Sidebar from '../partials/Sidebar';
+import Sidebar from "../partials/Sidebar";
 // import Header from '../partials/Header';
-import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
-import DashboardAvatars from '../partials/dashboard/DashboardAvatars';
-import FilterButton from '../components/DropdownFilter';
-import Datepicker from '../components/Datepicker';
-import DashboardCard01 from '../partials/dashboard/DashboardCard01';
-import DashboardCard02 from '../partials/dashboard/DashboardCard02';
-import DashboardCard03 from '../partials/dashboard/DashboardCard03';
-import DashboardCard04 from '../partials/dashboard/DashboardCard04';
-import DashboardCard05 from '../partials/dashboard/DashboardCard05';
-import DashboardCard06 from '../partials/dashboard/DashboardCard06';
-import DashboardCard07 from '../partials/dashboard/DashboardCard07';
-import DashboardCard08 from '../partials/dashboard/DashboardCard08';
-import DashboardCard09 from '../partials/dashboard/DashboardCard09';
-import DashboardCard10 from '../partials/dashboard/DashboardCard10';
-import DashboardCard11 from '../partials/dashboard/DashboardCard11';
-import DashboardCard12 from '../partials/dashboard/DashboardCard12';
-import DashboardCard13 from '../partials/dashboard/DashboardCard13';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import axios from 'axios';
-import { styled } from '@mui/material/styles';
-import {useUser} from '@clerk/clerk-react';
-import TextField from '@mui/material/TextField';
-
+import WelcomeBanner from "../partials/dashboard/WelcomeBanner";
+import DashboardAvatars from "../partials/dashboard/DashboardAvatars";
+import FilterButton from "../components/DropdownFilter";
+import Datepicker from "../components/Datepicker";
+import DashboardCard01 from "../partials/dashboard/DashboardCard01";
+import DashboardCard02 from "../partials/dashboard/DashboardCard02";
+import DashboardCard03 from "../partials/dashboard/DashboardCard03";
+import DashboardCard04 from "../partials/dashboard/DashboardCard04";
+import DashboardCard05 from "../partials/dashboard/DashboardCard05";
+import DashboardCard06 from "../partials/dashboard/DashboardCard06";
+import DashboardCard07 from "../partials/dashboard/DashboardCard07";
+import DashboardCard08 from "../partials/dashboard/DashboardCard08";
+import DashboardCard09 from "../partials/dashboard/DashboardCard09";
+import DashboardCard10 from "../partials/dashboard/DashboardCard10";
+import DashboardCard11 from "../partials/dashboard/DashboardCard11";
+import DashboardCard12 from "../partials/dashboard/DashboardCard12";
+import DashboardCard13 from "../partials/dashboard/DashboardCard13";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import axios from "axios";
+import { styled } from "@mui/material/styles";
+import { useUser } from "@clerk/clerk-react";
+import TextField from "@mui/material/TextField";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
+  bgcolor: "#ffffff", // Change background color to white or any preferred color
+  borderRadius: "12px", // Add border radius for rounded corners
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", // Soften the shadow
   p: 4,
 };
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
   height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
+  overflow: "hidden",
+  position: "absolute",
   bottom: 0,
   left: 0,
-  whiteSpace: 'nowrap',
+  whiteSpace: "nowrap",
   width: 1,
 });
 
-
 function Dashboard() {
-  
   const user = useUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -72,57 +70,60 @@ function Dashboard() {
   const [name, setName] = useState(null);
   const fetchImages = async () => {
     try {
-      const user_id=user.user.id 
-      const response = await axios.get('http://localhost:8000/api/get-unapproved-images/', {
-        params: {
-          user_id: user_id
+      const user_id = user.user.id;
+      const response = await axios.get(
+        "http://localhost:8000/api/get-unapproved-images/",
+        {
+          params: {
+            user_id: user_id,
+          },
         }
-      });
+      );
       setImages(response.data);
       console.log(response.data);
     } catch (error) {
-      console.error('Error fetching images:', error);
+      console.error("Error fetching images:", error);
     }
   };
 
   const fetchRejected = async () => {
     try {
-      const user_id=user.user.id 
-      const response = await axios.get('http://localhost:8000/api/get-rejected-items/', {
-        params: {
-          user_id: user_id
+      const user_id = user.user.id;
+      const response = await axios.get(
+        "http://localhost:8000/api/get-rejected-items/",
+        {
+          params: {
+            user_id: user_id,
+          },
         }
-      });
+      );
       setRejected(response.data);
-      console.log("dashboard rejected",response.data);
+      console.log("dashboard rejected", response.data);
     } catch (error) {
-      console.error('Error fetching rejected images:', error);
+      console.error("Error fetching rejected images:", error);
     }
   };
-  
+
   useEffect(() => {
-    
-    console.log('get-rejected-items user id: ',user.user.id )
-  
+    console.log("get-rejected-items user id: ", user.user.id);
+
     fetchRejected();
   }, []);
 
-
   useEffect(() => {
-    
-    console.log('get-unapproved-images user id: ',user.user.id )
-  
+    console.log("get-unapproved-images user id: ", user.user.id);
+
     fetchImages();
   }, []);
 
   const locations = [
-    { name: 'Location 1', viewers: 1000, price: 50 },
-    { name: 'Location 2', viewers: 2000, price: 75 },
-    { name: 'Location 3', viewers: 1500, price: 60 },
-    { name: 'Location 4', viewers: 1800, price: 70 },
-    { name: 'Location 5', viewers: 2500, price: 100 }
+    { name: "Location 1", viewers: 1000, price: 50 },
+    { name: "Location 2", viewers: 2000, price: 75 },
+    { name: "Location 3", viewers: 1500, price: 60 },
+    { name: "Location 4", viewers: 1800, price: 70 },
+    { name: "Location 5", viewers: 2500, price: 100 },
   ];
-  console.log("User:",user)
+  console.log("User:", user);
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
   };
@@ -131,43 +132,60 @@ function Dashboard() {
     setFile(event.target.files[0]);
   };
 
-
   const handleSubmit = async () => {
-    console.log(selectedLocation,file)
-    console.log('submit user',user.user.id)
-    const user_id=user.user.id
+    console.log(selectedLocation, file);
+    console.log("submit user", user.user.id);
+    const user_id = user.user.id;
     try {
-      const response = await axios.post('http://localhost:8000/api/upload/', {loc:selectedLocation['name'], file:file, user_id:user_id,name:name}, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        "http://localhost:8000/api/upload/",
+        {
+          loc: selectedLocation["name"],
+          file: file,
+          user_id: user_id,
+          name: name,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
       console.log(response.data);
       fetchImages();
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-    setOpen(false)
+    setOpen(false);
   };
 
   const handleSubmitVideo = async () => {
-    console.log(selectedLocation,file)
-    
-    const user_id=user.user.id
+    console.log(selectedLocation, file);
+
+    const user_id = user.user.id;
     try {
-      const response = await axios.post('http://localhost:8000/api/upload_video/', {loc:selectedLocation['name'], file:file, user_id:user_id,name:name}, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      const response = await axios.post(
+        "http://localhost:8000/api/upload_video/",
+        {
+          loc: selectedLocation["name"],
+          file: file,
+          user_id: user_id,
+          name: name,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
       console.log(response.data);
+      fetchImages();
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-    vidsetOpen(false)
+    vidsetOpen(false);
   };
 
-  
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -177,12 +195,10 @@ function Dashboard() {
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         {/*  Site header */}
 
-    
-       
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {/* Welcome banner */}
-            <WelcomeBanner title='Welcome to AdvisioScreens'/>
+            <WelcomeBanner title="Welcome to AdvisioScreens" />
 
             {/* Dashboard actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
@@ -190,14 +206,17 @@ function Dashboard() {
               <DashboardAvatars />
               <div className="flex justify-center items-center space-x-4">
                 <div>
-                  <button onClick={handleOpen} className="btn bg-indigo-500 hover:bg-indigo-600 text-white" >
-                  <svg
-                    className="w-4 h-4 fill-current opacity-50 shrink-0"
-                    viewBox="0 0 16 16"
+                  <button
+                    onClick={handleOpen}
+                    className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                   >
-                    <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-                  </svg>
-                  <span className="xs:block ml-2">Add Image</span>
+                    <svg
+                      className="w-4 h-4 fill-current opacity-50 shrink-0"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+                    </svg>
+                    <span className="xs:block ml-2">Add Image</span>
                   </button>
                   <Modal
                     open={open}
@@ -206,14 +225,18 @@ function Dashboard() {
                     aria-describedby="modal-modal-description"
                   >
                     <Box sx={style}>
-                    <TextField
-                    style={{marginBottom:'10px', width:'100%'}}
-                      required
-                      id="outlined-required"
-                      label="Name"
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                      <TextField
+                        style={{ marginBottom: "10px", width: "100%" }}
+                        required
+                        id="outlined-required"
+                        label="Add Titlle here"
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
                         Select Location
                       </Typography>
                       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -223,8 +246,17 @@ function Dashboard() {
                               {locations.map((location, index) => (
                                 <li key={index}>
                                   <label>
-                                    <input type="radio" style={{marginRight:'10px'}} name="location" value={location.name} onChange={() => handleLocationSelect(location)} />
-                                    {location.name} - {location.viewers} viewers - ${location.price}
+                                    <input
+                                      type="radio"
+                                      style={{ marginRight: "10px" }}
+                                      name="location"
+                                      value={location.name}
+                                      onChange={() =>
+                                        handleLocationSelect(location)
+                                      }
+                                    />
+                                    {location.name} - {location.viewers} viewers
+                                    - ${location.price}
                                   </label>
                                 </li>
                               ))}
@@ -233,7 +265,7 @@ function Dashboard() {
                         </div>
 
                         <Button
-                          style={{ marginTop: '20px', width: '100%' }}
+                          style={{ marginTop: "20px", width: "100%" }}
                           component="label"
                           role={undefined}
                           variant="contained"
@@ -241,23 +273,37 @@ function Dashboard() {
                           startIcon={<CloudUploadIcon />}
                         >
                           Upload file
-                          <VisuallyHiddenInput accept='image/*' type="file" onChange={handleFileChange}/>
+                          <VisuallyHiddenInput
+                            accept="image/*"
+                            type="file"
+                            onChange={handleFileChange}
+                          />
                         </Button>
-                        <Button disabled={!selectedLocation || !file || !name} style={{ marginTop: '20px'}} onClick={handleSubmit} variant="contained">Submit</Button>
+                        <Button
+                          disabled={!selectedLocation || !file || !name}
+                          style={{ marginTop: "20px" }}
+                          onClick={handleSubmit}
+                          variant="contained"
+                        >
+                          Submit
+                        </Button>
                       </Typography>
                     </Box>
                   </Modal>
                 </div>
 
                 <div>
-                  <button onClick={vidhandleOpen} className="btn bg-indigo-500 hover:bg-indigo-600 text-white" >
-                  <svg
-                    className="w-4 h-4 fill-current opacity-50 shrink-0"
-                    viewBox="0 0 16 16"
+                  <button
+                    onClick={vidhandleOpen}
+                    className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                   >
-                    <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
-                  </svg>
-                  <span className="xs:block ml-2">Add Video</span>
+                    <svg
+                      className="w-4 h-4 fill-current opacity-50 shrink-0"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+                    </svg>
+                    <span className="xs:block ml-2">Add Video</span>
                   </button>
                   <Modal
                     open={vidopen}
@@ -266,7 +312,18 @@ function Dashboard() {
                     aria-describedby="modal-modal-description"
                   >
                     <Box sx={style}>
-                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                      <TextField
+                        style={{ marginBottom: "10px", width: "100%" }}
+                        required
+                        id="outlined-required"
+                        label="Ad Title here"
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
                         Select Location
                       </Typography>
                       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -276,8 +333,17 @@ function Dashboard() {
                               {locations.map((location, index) => (
                                 <li key={index}>
                                   <label>
-                                    <input type="radio" style={{marginRight:'10px'}} name="location" value={location.name} onChange={() => handleLocationSelect(location)} />
-                                    {location.name} - {location.viewers} viewers - ${location.price}
+                                    <input
+                                      type="radio"
+                                      style={{ marginRight: "10px" }}
+                                      name="location"
+                                      value={location.name}
+                                      onChange={() =>
+                                        handleLocationSelect(location)
+                                      }
+                                    />
+                                    {location.name} - {location.viewers} viewers
+                                    - ${location.price}
                                   </label>
                                 </li>
                               ))}
@@ -286,7 +352,7 @@ function Dashboard() {
                         </div>
 
                         <Button
-                          style={{ marginTop: '20px', width: '100%' }}
+                          style={{ marginTop: "20px", width: "100%" }}
                           component="label"
                           role={undefined}
                           variant="contained"
@@ -294,14 +360,25 @@ function Dashboard() {
                           startIcon={<CloudUploadIcon />}
                         >
                           Upload file
-                          <VisuallyHiddenInput accept="video/*" type="file" onChange={handleFileChange}/>
+                          <VisuallyHiddenInput
+                            accept="video/*"
+                            type="file"
+                            onChange={handleFileChange}
+                          />
                         </Button>
-                        <Button disabled={!selectedLocation || !file} style={{ marginTop: '20px'}} onClick={handleSubmitVideo} variant="contained">Submit</Button>
+                        <Button
+                          disabled={!selectedLocation || !file}
+                          style={{ marginTop: "20px" }}
+                          onClick={handleSubmitVideo}
+                          variant="contained"
+                        >
+                          Submit
+                        </Button>
                       </Typography>
                     </Box>
                   </Modal>
                 </div>
-              </div> 
+              </div>
 
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
@@ -334,19 +411,17 @@ function Dashboard() {
               {/* Stacked bar chart (Sales VS Refunds) */}
               <DashboardCard09 />
               {/* Card (Customers) */}
-              <DashboardCard10 images={images}/>
+              <DashboardCard10 images={images} />
               {/* Card (Reasons for Refunds) */}
               <DashboardCard11 />
               {/* Card (Recent Activity) */}
               <DashboardCard12 locations={locations} />
               {/* Card (Income/Expenses) */}
-              <DashboardCard13 reject={reject}/>
+              <DashboardCard13 reject={reject} />
             </div>
           </div>
           <div></div>
         </main>
-
-      
       </div>
     </div>
   );

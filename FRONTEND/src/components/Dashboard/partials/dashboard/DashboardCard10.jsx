@@ -57,7 +57,7 @@ function DashboardCard10({images}) {
   
 
   return (
-    <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+    <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
         <h2 className="font-semibold text-slate-800 dark:text-slate-800">
           Pending Ads
@@ -68,19 +68,19 @@ function DashboardCard10({images}) {
         <div className="overflow-x-auto">
           <table className="table-auto w-full">
             {/* Table header */}
-            <thead className="text-xs font-semibold uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50">
+            <thead className="text-xs font-semibold uppercase text-slate-400 dark:text-slate-900 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 ">
               <tr>
                 <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Name</div>
+                  <div className="font-semibold text-left">Ad Title</div>
                 </th>
                 <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Email</div>
+                  <div className="font-semibold text-left">Cost</div>
                 </th>
                 <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Spent</div>
+                  <div className="font-semibold text-left">Impressions</div>
                 </th>
                 <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-center">Country</div>
+                  <div className="font-semibold text-center">Location</div>
                 </th>
               </tr>
             </thead>

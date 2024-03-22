@@ -56,7 +56,7 @@ function DashboardCard11() {
     labels: ["Reasons"],
     datasets: [
       {
-        label: "Having difficulties using the product",
+        label: "Having ",
         data: [0],
         backgroundColor: tailwindConfig().theme.colors.indigo[500],
         hoverBackgroundColor: tailwindConfig().theme.colors.indigo[600],
@@ -135,7 +135,7 @@ function DashboardCard11() {
   }, []);
 
   return (
-    <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+    <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
         <h2 className="font-semibold text-slate-800 dark:text-slate-800">
           Feedbacks 
