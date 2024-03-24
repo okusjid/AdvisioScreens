@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useThemeProvider } from '../utils/ThemeContext';
+import PropTypes from 'prop-types';
 
 import { chartColors } from './ChartjsConfig';
 import {
@@ -14,16 +15,38 @@ Chart.register(BarController, BarElement, LinearScale, CategoryScale, Tooltip, L
 
 function BarChart03({
   data,
+  feedbackData,
   width,
-  height
+  height,
 }) {
+  const datasetPropType = PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      data: PropTypes.arrayOf(PropTypes.number).isRequired,
+      backgroundColor: PropTypes.string.isRequired,
+      hoverBackgroundColor: PropTypes.string.isRequired,
+      barPercentage: PropTypes.number.isRequired,
+      categoryPercentage: PropTypes.number.isRequired,
+    })
+  ).isRequired;
+
+  // Prop type validation
+  BarChart03.propTypes = {
+    data: PropTypes.shape({
+      labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+      datasets: PropTypes.arrayOf(PropTypes.object).isRequired,
+    }).isRequired,
+    feedbackData: PropTypes.arrayOf(PropTypes.object).isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  };
 
   const [chart, setChart] = useState(null);
   const canvas = useRef(null);
   const legend = useRef(null);
   const { currentTheme } = useThemeProvider();
   const darkMode = currentTheme === 'dark';
-  const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;   
+  const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;
 
   useEffect(() => {
 
@@ -94,7 +117,9 @@ function BarChart03({
             }
             // Reuse the built-in legendItems generator
             const items = c.options.plugins.legend.labels.generateLabels(c);
-            items.forEach((item) => {
+            // let data_index=0;
+            items.forEach((item, index) => {
+              // data_index+=1;
               const li = document.createElement('li');
               li.style.display = 'flex';
               li.style.justifyContent = 'space-between';
@@ -116,7 +141,8 @@ function BarChart03({
               value.style.marginLeft = tailwindConfig().theme.margin[3];
               value.style.color = item.text === 'Other' ? tailwindConfig().theme.colors.slate[400] : item.fillStyle;
               const theValue = c.data.datasets[item.datasetIndex].data.reduce((a, b) => a + b, 0);
-              const valueText = document.createTextNode(`${parseInt((theValue / max) * 100)}%`);
+              const calc = (theValue / max) * 100;
+              const valueText = document.createTextNode(`${parseInt(max === 0 ? 0 : calc)}%`);
               const labelText = document.createTextNode(item.text);
               value.appendChild(valueText);
               label.appendChild(labelText);
@@ -125,6 +151,40 @@ function BarChart03({
               li.appendChild(value);
               wrapper.appendChild(box);
               wrapper.appendChild(label);
+
+              li.addEventListener('mouseenter', () => {
+                const filteredFeedback = feedbackData.filter(feedback => feedback.option_id === (index + 1));
+                const feedbackCounts = filteredFeedback.reduce((counts, feedback) => {
+                  counts[feedback.item_name] = (counts[feedback.item_name] || 0) + 1;
+                  return counts;
+                }, {});
+                const next = li.nextSibling;
+
+                Object.entries(feedbackCounts).forEach(([itemName, count]) => {
+                  const li2 = document.createElement('li')
+                  li2.className = 'popup'
+                  li2.style.border = 'none';
+                  li2.style.display = 'flex';
+                  li2.style.paddingTop = tailwindConfig().theme.padding[1];
+                  li2.style.paddingBottom = tailwindConfig().theme.padding[1];
+                  li2.style.justifyContent = 'space-between';
+                  const name = document.createElement('div');
+                  name.innerHTML = itemName;
+                  const namecount = document.createElement('div');
+                  namecount.innerHTML = count;
+                  li2.appendChild(name);
+                  li2.appendChild(namecount)
+                  ul.insertBefore(li2, next)
+                  li2.offsetWidth;
+                  li2.classList.add('show');
+                });
+              })
+              li.addEventListener('mouseleave', () => {
+                const stats = document.querySelectorAll('ul > .popup')
+                stats.forEach(stat => {
+                      stat.remove(); // Removing the element after the transition ends
+              });
+              })
             });
           },
         },
@@ -133,7 +193,7 @@ function BarChart03({
     setChart(newChart);
     return () => newChart.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     if (!chart) return;
@@ -148,13 +208,14 @@ function BarChart03({
       chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light;
     }
     chart.update('none');
-  }, [currentTheme]);  
+  }, [currentTheme]);
 
   return (
     <div className="grow flex flex-col justify-center">
       <div>
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
+      <div></div>
       <div className="px-5 pt-2 pb-2">
         <ul ref={legend} className="text-sm divide-y divide-slate-100 dark:divide-slate-700"></ul>
         <ul className="text-sm divide-y divide-slate-100 dark:divide-slate-700"></ul>

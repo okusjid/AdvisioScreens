@@ -15,7 +15,8 @@ import Howitworks from '../pages/How-it-works';
 import Cost from "../components/Cost/Cost";
 import AdminLayout from '../pages/Admin/Admin';
 import ErrorPage1 from '../pages/Admin/Errorpage';
-
+import Analytics from '../pages/Analytics'; 
+import FeedbackForm from '../pages/FeedbackForm';
 import UserManagementPage from '../components/Admin/UserManagementPage';
 import AdminContactMessages from '../components/Admin/AdminContactMessages';
 import AdminHomePage from '../components/Admin/Admin-home';
@@ -49,6 +50,8 @@ const Routing = () => {
         <Route path='/gallery' element={<DefaultLayout><Gallery /></DefaultLayout>} />
         <Route path="/cost" element={<DefaultLayout><Cost /></DefaultLayout>} />
         <Route path="/Dashboard" element={<Dashboard1/>} />
+        <Route path="/dashboard/analytics" element={<Analytics/>} />
+        <Route path="/dashboard/feedback-form" element={<FeedbackForm/>} />
         <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>
           
           <Route path="contact-messages" element={<AdminContactMessages />} />
