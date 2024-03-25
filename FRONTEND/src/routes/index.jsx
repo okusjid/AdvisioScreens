@@ -22,6 +22,7 @@ import AdminContactMessages from '../components/Admin/AdminContactMessages';
 import AdminHomePage from '../components/Admin/Admin-home';
 import Gallery from "../components/gallery/Gallery";
 import Dashboard1 from '../components/Dashboard/Dashboard1';
+import Location from '../pages/Location';
 const DefaultLayout = ({ children }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -49,9 +50,11 @@ const Routing = () => {
         <Route path='/howitworks' element={<DefaultLayout><Howitworks /></DefaultLayout>} />
         <Route path='/gallery' element={<DefaultLayout><Gallery /></DefaultLayout>} />
         <Route path="/cost" element={<DefaultLayout><Cost /></DefaultLayout>} />
-        <Route path="/Dashboard" element={<Dashboard1/>} />
+        <Route path="/Dashboard" element={<Dashboard1 />} />
+        
         <Route path="/dashboard/analytics" element={<Analytics/>} />
-        <Route path="/dashboard/feedback-form" element={<FeedbackForm/>} />
+        <Route path="/dashboard/feedback-form" element={<FeedbackForm />} />
+        <Route path="/locations" element={<DefaultLayout><Location /></DefaultLayout>} />
         <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>
           
           <Route path="contact-messages" element={<AdminContactMessages />} />
