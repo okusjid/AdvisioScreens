@@ -2,7 +2,7 @@ import React from "react";
 
 function DashboardCard12({ locations }) {
   return (
-    <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+    <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
         <h2 className="font-semibold text-slate-800 dark:text-slate-800">
           Available Locations
@@ -12,7 +12,7 @@ function DashboardCard12({ locations }) {
         {/* Card content */}
         {/* "Today" group */}
         <div>
-          <header className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm font-semibold p-2">
+          <header className="text-xs uppercase text-slate-400 dark:text-slate-900 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-md font-semibold p-2">
             Today
           </header>
           <ul className="my-1">
@@ -46,12 +46,7 @@ function DashboardCard12({ locations }) {
                         viewers
                       </div>
                       <div className="shrink-0 self-end ml-2">
-                        <a
-                          className="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                          href="#0"
-                        >
-                          View<span className="hidden sm:inline"> -&gt;</span>
-                        </a>
+                       
                       </div>
                     </div>
                   </div>
@@ -61,8 +56,8 @@ function DashboardCard12({ locations }) {
         </div>
         {/* "Yesterday" group */}
         <div>
-          <header className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm font-semibold p-2">
-            Yesterday
+          <header className="text-xs uppercase text-slate-900 dark:text-slate-900 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-md font-semibold p-2">
+            All Locations Where you Ehance your Business
           </header>
           {/* <ul className="my-1">
             <li className="flex px-2">

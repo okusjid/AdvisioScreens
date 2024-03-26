@@ -92,7 +92,7 @@ function DashboardCard05() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 bg-white rounded-md shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 text-slate-800">
+    <div className="flex flex-col col-span-full sm:col-span-6 bg-white rounded-md shadow-lg border border-slate-200 dark:border-slate-700 text-slate-800">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center">
         <h2 className="font-semibold text-slate-800 dark:text-slate-800">
           Real Time Value
