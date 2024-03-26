@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect,useState } from 'react';
+import { Link  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import HeroSection from '../components/Home/Hero-Home'; 
 import FeaturesSection from '../components/Home/Feature-Home';
 import CTASection from '../components/Home/CTA-Home';
@@ -22,6 +23,9 @@ import {
 // Home Component
 const Home = () => {
   const { isSignedIn, user } = useUser();
+  const [userRole, setUserRole] = useState('');
+  const navigate = useNavigate();
+
   // if (!isSignedIn) {
   //   return <div>No User</div>;
   // }
@@ -41,6 +45,43 @@ const Home = () => {
       });
     }
   }, [isSignedIn]);
+
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/get_user_role/', {
+          params: {
+            clerk_user_id: user.id  // Assuming user.id is the clerk_user_id
+          },
+          withCredentials: false  // Include credentials for CORS
+        });
+        const { role } = response.data;
+        setUserRole(role);
+        console.log('User role:', role);
+      } catch (error) {
+        console.error('Error fetching user role:', error);
+      }
+    };
+
+    if (isSignedIn) {
+      fetchUserRole();
+    }
+  }, [isSignedIn, user]);
+
+  useEffect(() => {
+    if (isSignedIn && userRole) {
+      if (userRole === 'admin') {
+        console.log('Redirecting to admin page');
+        navigate('/admin'); // Use navigate for navigation
+      } else {
+        console.log('Redirecting to user page');
+        navigate('/'); // Redirect to user page for non-admin users
+      }
+    }
+  }, [isSignedIn, userRole, navigate]);
+
+
   return (
     <>  
       {/* <div>
