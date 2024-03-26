@@ -16,6 +16,7 @@ urlpatterns = [
     path("get-feedback-count/", views.get_feedback, name="get-feedback-count"),
     path("get-rejected-items/", views.get_rejected_items, name="get-rejected-items"),
     path('save_user_data/', views.save_user_data, name='save_user_data'),
+    path('get_user_role/', views.get_user_role, name='get_user_role'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

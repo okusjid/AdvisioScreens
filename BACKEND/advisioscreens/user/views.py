@@ -7,8 +7,11 @@ from django.shortcuts import render, redirect
 from .models import *
 from rest_framework.parsers import MultiPartParser
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from django.http import JsonResponse
 from collections import defaultdict
+
 
 @csrf_exempt
 def save_user_data(request):
@@ -25,7 +28,6 @@ def save_user_data(request):
             # User exists, update their information
             user.name = name
             user.email = email
-            user.role = role
             user.save()
             return JsonResponse({'message': 'User data updated successfully.'})
         except User.DoesNotExist:
@@ -191,3 +193,19 @@ def get_feedback(request):
         "feedback_counts": feedback_counts,
     }
     return JsonResponse(feedback)
+
+
+def get_user_role(request):
+    if request.method == 'GET':
+        clerk_user_id = request.GET.get('clerk_user_id')
+        if clerk_user_id:
+            try:
+                user = User.objects.get(clerk_user_id=clerk_user_id)
+                role = user.role  # Assuming 'role' is a field in your User model
+                return JsonResponse({'role': role})
+            except User.DoesNotExist:
+                return JsonResponse({'error': 'User not found.'}, status=404)
+        else:
+            return JsonResponse({'error': 'Missing clerk_user_id parameter.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Only GET requests are allowed.'}, status=400)
