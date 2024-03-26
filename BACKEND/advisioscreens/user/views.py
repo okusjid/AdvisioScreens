@@ -10,6 +10,35 @@ from rest_framework.views import APIView
 from django.http import JsonResponse
 from collections import defaultdict
 
+@csrf_exempt
+def save_user_data(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        clerk_user_id = data.get('clerk_user_id')
+        name = data.get('name')
+        email = data.get('email')
+        role = data.get('role', 'user')  # Default role is set to 'user'
+
+        # Check if user already exists
+        try:
+            user = User.objects.get(clerk_user_id=clerk_user_id)
+            # User exists, update their information
+            user.name = name
+            user.email = email
+            user.role = role
+            user.save()
+            return JsonResponse({'message': 'User data updated successfully.'})
+        except User.DoesNotExist:
+            # User doesn't exist, create a new entry
+            User.objects.create(
+                clerk_user_id=clerk_user_id,
+                name=name,
+                email=email,
+                role=role
+            )
+            return JsonResponse({'message': 'New user created successfully.'})
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
 
 class UploadImage(APIView):
     parser_classes = [MultiPartParser]
