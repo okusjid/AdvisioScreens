@@ -5,6 +5,7 @@ const UserProfilePage = () => {
   const { user } = useUser();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Function to fetch user data from the backend
   const fetchUserData = async () => {
@@ -85,6 +86,11 @@ const UserProfilePage = () => {
     }
   };
 
+  // Filter users based on search term
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -92,8 +98,15 @@ const UserProfilePage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">User Management</h1>
+      <input
+        type="text"
+        placeholder="Search by name..."
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+        className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
       <ul className="grid gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-        {users.map(user => (
+        {filteredUsers.map(user => (
           <li
             key={user.clerk_user_id}
             className="bg-white shadow-lg rounded-lg p-6 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
