@@ -209,3 +209,36 @@ def get_user_role(request):
             return JsonResponse({'error': 'Missing clerk_user_id parameter.'}, status=400)
     else:
         return JsonResponse({'error': 'Only GET requests are allowed.'}, status=400)
+
+# set user role to admin or user
+@csrf_exempt   
+def set_user_role(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        clerk_user_id = data.get('clerk_user_id')
+        role = data.get('role')
+        try:
+            user = User.objects.get(clerk_user_id=clerk_user_id)
+            user.role = role
+            user.save()
+            return JsonResponse({'message': 'User role updated successfully.'})
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found.'}, status=404)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
+    
+# get user data of all users
+def get_user_data(request):
+    if request.method == 'GET':
+        users = User.objects.all()
+        user_data = []
+        for user in users:
+            user_data.append({
+                'clerk_user_id': user.clerk_user_id,
+                'name': user.name,
+                'email': user.email,
+                'role': user.role
+            })
+        return JsonResponse(user_data, safe=False)
+    else:
+        return JsonResponse({'error': 'Only GET requests are allowed.'}, status=400)    
