@@ -11,11 +11,23 @@ const FeedbackForm = () => {
 
   const [selectedOptionId, setSelectedOptionId] = useState("");
   const questions = [
-    { id: 1, text: "Having difficulties using the product" },
-    { id: 2, text: "Missing features I need" },
-    { id: 3, text: "Not satisfied about the quality of the product" },
-    { id: 4, text: "The product doesn’t look as advertised" },
-    { id: 5, text: "Other" },
+    {
+      id: 1,
+      text: "The advertisement is relevant to me as the target audience.",
+    },
+    {
+      id: 2,
+      text: "The advertisement can clearly and effectively convey its message",
+    },
+    {
+      id: 3,
+      text: "The ad engages me, encouraging participation and sparking interest.",
+    },
+    { id: 4, text: "The advertisement is negatively impacting the audience." },
+    {
+      id: 5,
+      text: "The Advertisement Makes me want to learn more about the product or brander.",
+    },
   ];
 
   const handleOptionChange = (e) => {
