@@ -96,41 +96,64 @@ const ImageManagement = () => {
 
       {/* Image Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {filteredImages.map(image => (
-          <div key={image.id} className={`shadow-md rounded-lg overflow-hidden ad-box ${image.approved ? 'bg-green-100' : image.rejected ? 'bg-red-100' : 'bg-gray-100'}`}>
-            <img src={`http://localhost:8000/uploads${image.image_url}`} alt={image.name} className="w-full h-auto object-cover" />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">
-              Name: {image.name}
-              </h3>
-              <p className="text-gray-700">
-              Location: {image.location}
-              </p>
-            </div>
-            <div className="p-4 flex justify-between items-center">
-            
-              <span className={`${image.approved ? 'text-green-500 font-semibold' : image.rejected ? 'text-red-500 font-semibold' : 'font-semibold'}`}>
-              Status:  {image.approved ? 'Accepted' : image.rejected ? 'Rejected' : 'Pending'}
-              </span>
-              {image.approved && !image.rejected && (
-                <button
-                  onClick={() => handleSetRejection(image.id, true)}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-700"
-                >
-                  Reject
-                </button>
-              )}
-              {!image.approved && image.rejected && (
-                <button
-                  onClick={() => handleSetApproval(image.id, true)}
-                  className="bg-green-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-green-700"
-                >
-                  Approve
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
+      {filteredImages.map(image => (
+  <div key={image.id} className={`shadow-md rounded-lg overflow-hidden ad-box ${image.approved ? 'bg-green-100' : image.rejected ? 'bg-red-100' : 'bg-gray-100'}`}>
+    {/* Image display and details */}
+    <div className="p-4">
+      {/* Image display */}
+      <img src={`http://localhost:8000/uploads${image.image_url}`} alt={image.name} className="w-full h-60 object-cover mb-10" />
+      {/* Image name */}
+      <h3 className="text-xl font-semibold mb-2">
+        Name: {image.name}
+      </h3>
+      {/* Image location */}
+      <p className="text-gray-700">
+        Location: {image.location}
+      </p>
+    </div>
+    {/* Image status and actions */}
+    <div className="p-4 flex justify-between items-center">
+      {/* Displaying image status */}
+      <span className={`${image.approved ? 'text-green-500 font-semibold' : image.rejected ? 'text-red-500 font-semibold' : 'font-semibold'}`}>
+        Status:  {image.approved ? 'Accepted' : image.rejected ? 'Rejected' : 'Pending'}
+      </span>
+      {/* Conditional rendering of approval and rejection buttons */}
+      {image.approved && !image.rejected && (
+        <button
+          onClick={() => handleSetRejection(image.id, true)}
+          className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-700"
+        >
+          Reject
+        </button>
+      )}
+      {!image.approved && image.rejected && (
+        <button
+          onClick={() => handleSetApproval(image.id, true)}
+          className="bg-green-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-green-700"
+        >
+          Approve
+        </button>
+      )}
+      {/* Conditional rendering of both approval and rejection buttons for pending status */}
+      {!image.approved && !image.rejected && (
+        <>
+          <button
+            onClick={() => handleSetApproval(image.id, true)}
+            className="bg-green-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-green-700"
+          >
+            Approve
+          </button>
+          <button
+            onClick={() => handleSetRejection(image.id, true)}
+            className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-700"
+          >
+            Reject
+          </button>
+        </>
+      )}
+    </div>
+  </div>
+))}
       </div>
     </div>
   );
