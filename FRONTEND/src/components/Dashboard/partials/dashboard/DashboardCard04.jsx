@@ -24,15 +24,8 @@ function DashboardCard04() {
         barPercentage: 0.66,
         categoryPercentage: 0.66,
       },
-      // Blue bars
-      {
-        label: "Indirect",
-        data: [4900, 2600, 5350, 4800, 5200, 4800],
-        backgroundColor: tailwindConfig().theme.colors.indigo[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.indigo[600],
-        barPercentage: 0.66,
-        categoryPercentage: 0.66,
-      },
+   
+     
     ],
   };
 
@@ -40,7 +33,7 @@ function DashboardCard04() {
     <div className="flex flex-col col-span-full sm:col-span-6 bg-white  shadow-lg rounded-md border border-slate-200 dark:border-slate-700 text-black">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 text-black">
         <h2 className="font-semibold text-black dark:text-black">
-          Direct VS Indirect
+          Monthly Cost Breakdown
         </h2>
       </header>
       {/* Chart built with Chart.js 3 */}

@@ -56,7 +56,7 @@ function DashboardCard11() {
     labels: ["Reasons"],
     datasets: [
       {
-        label: "Having ",
+        label: "The advertisement is relevant to you as the target audience. ",
         data: [0],
         backgroundColor: tailwindConfig().theme.colors.indigo[500],
         hoverBackgroundColor: tailwindConfig().theme.colors.indigo[600],
@@ -64,7 +64,8 @@ function DashboardCard11() {
         categoryPercentage: 1,
       },
       {
-        label: "Missing features I need",
+        label:
+          "The advertisement can clearly and effectively convey its message.",
         data: [0],
         backgroundColor: tailwindConfig().theme.colors.indigo[800],
         hoverBackgroundColor: tailwindConfig().theme.colors.indigo[900],
@@ -72,7 +73,8 @@ function DashboardCard11() {
         categoryPercentage: 1,
       },
       {
-        label: "Not satisfied about the quality of the product",
+        label:
+          "The ad engages you, encouraging participation and sparking interest.",
         data: [0],
         backgroundColor: tailwindConfig().theme.colors.sky[400],
         hoverBackgroundColor: tailwindConfig().theme.colors.sky[500],
@@ -80,7 +82,7 @@ function DashboardCard11() {
         categoryPercentage: 1,
       },
       {
-        label: "The product doesn’t look as advertised",
+        label: "The advertisement is negatively impacting the audience.",
         data: [0],
         backgroundColor: tailwindConfig().theme.colors.green[400],
         hoverBackgroundColor: tailwindConfig().theme.colors.green[500],
@@ -88,7 +90,8 @@ function DashboardCard11() {
         categoryPercentage: 1,
       },
       {
-        label: "Other",
+        label:
+          "The Advertisement Makes me want to learn more about the product or brand",
         data: [0],
         backgroundColor: tailwindConfig().theme.colors.slate[200],
         hoverBackgroundColor: tailwindConfig().theme.colors.slate[300],
