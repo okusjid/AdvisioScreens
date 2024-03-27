@@ -20,9 +20,12 @@ import FeedbackForm from '../pages/FeedbackForm';
 import UserManagementPage from '../components/Admin/UserManagementPage';
 import AdminContactMessages from '../components/Admin/AdminContactMessages';
 import AdminHomePage from '../components/Admin/Admin-home';
+import AdManagement from '../components/Admin/AdManagment';
 import Gallery from "../components/gallery/Gallery";
 import Dashboard1 from '../components/Dashboard/Dashboard1';
 import Location from '../pages/Location';
+
+
 const DefaultLayout = ({ children }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -55,11 +58,10 @@ const Routing = () => {
         <Route path="/dashboard/analytics" element={<Analytics/>} />
         <Route path="/dashboard/feedback-form" element={<FeedbackForm />} />
         <Route path="/locations" element={<DefaultLayout><Location /></DefaultLayout>} />
-        <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>
-          
+        <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>          
           <Route path="contact-messages" element={<AdminContactMessages />} />
           <Route path='user-management' element={<UserManagementPage />} />
-          
+          <Route path='ad-management' element={<AdManagement />} />
           <Route path="" element={<AdminHomePage />} />
           <Route path="*" element={<ErrorPage1 />} />
          

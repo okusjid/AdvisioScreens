@@ -81,7 +81,90 @@ class UploadVideo(APIView):
             return JsonResponse(
                 {"success": False, "error": "Location or image missing"}, status=400
             )
+#get_all_images
+def get_all_images(request):
+    print("get_all_images")
+    user_images = Upload.objects.all()
+    images_data = []
+    for img in user_images:
+        print(img.item.url[8:])
+        images_data.append(
+            {
+                "id": img.id,
+                "name": img.name,
+                "location": img.location,
+                "image_url": img.item.url[8:],
+            }
+        )
+    return JsonResponse(images_data, safe=False)
 
+#set-image-approved
+@csrf_exempt
+def set_image_approved(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        image_id = data.get('image_id')
+        try:
+            image = Upload.objects.get(id=image_id)
+            image.approved = True
+            image.rejected = False
+            image.save()
+            return JsonResponse({'message': 'Image approved successfully.'})
+        except Upload.DoesNotExist:
+            return JsonResponse({'error': 'Image not found.'}, status=404)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
+
+#set-image-rejected
+@csrf_exempt
+def set_image_rejected(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        image_id = data.get('image_id')
+        try:
+            image = Upload.objects.get(id=image_id)
+            image.rejected = True
+            image.approved = False
+            image.save()
+            return JsonResponse({'message': 'Image rejected successfully.'})
+        except Upload.DoesNotExist:
+            return JsonResponse({'error': 'Image not found.'}, status=404)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
+
+# get_all_rejected_images
+def get_all_rejected_images(request):
+    print("get_all_rejected_images")
+    user_images = Upload.objects.filter(rejected=True)
+    images_data = []
+    for img in user_images:
+        print(img.item.url[8:])
+        images_data.append(
+            {
+                "id": img.id,
+                "name": img.name,
+                "location": img.location,
+                "image_url": img.item.url[8:],
+            }
+        )
+    return JsonResponse(images_data, safe=False)
+
+# get_all_accepted_images
+def get_all_accepted_images(request):
+    print("get_all_accepted_images")
+    user_images = Upload.objects.filter(approved=True)
+    images_data = []
+    for img in user_images:
+        print(img.item.url[8:])
+        images_data.append(
+            {
+                "id": img.id,
+                "name": img.name,
+                "location": img.location,
+                "image_url": img.item.url[8:],
+            }
+        )
+    return JsonResponse(images_data, safe=False)        
 
 def get_approved_images(request):
     print("get_approved_images")

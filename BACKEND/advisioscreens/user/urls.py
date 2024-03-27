@@ -6,11 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("upload/", views.UploadImage.as_view(), name="upload_image"),
     path("get-approved-images/", views.get_approved_images, name="get_approved_image"),
-    path(
-        "get-unapproved-images/",
-        views.get_unapproved_images,
-        name="get_unapproved_image",
-    ),
+    path("get-unapproved-images/",views.get_unapproved_images,name="get_unapproved_image",),
     path("upload_video/", views.UploadVideo.as_view(), name="upload_video"),
     path("feedback_form/", views.FeedbackView.as_view(), name="feedback_form"),
     path("get-feedback-count/", views.get_feedback, name="get-feedback-count"),
@@ -19,6 +15,11 @@ urlpatterns = [
     path('get_user_role/', views.get_user_role, name='get_user_role'),
     path('set_user_role/', views.set_user_role, name='set_user_role'),
     path('get_user_data/', views.get_user_data, name='get_user_data'),
+    path('get-all-images/', views.get_all_images, name='get_all_images'),
+    path('set-image-approved/', views.set_image_approved, name='set_image_approved'),
+    path('set-image-rejected/', views.set_image_rejected, name='set_image_rejected'),
+    path('get-all-rejected-images/', views.get_all_rejected_images, name='get_all_rejected_images'),
+    path('get-all-approved-images/', views.get_all_accepted_images, name='get_all_accepted_images'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
