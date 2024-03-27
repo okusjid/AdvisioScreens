@@ -82,10 +82,10 @@ const ImageManagement = () => {
   } else if (filter === 'rejected') {
     filteredImages = images.filter(image => image.rejected);
   }
-
+ 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold mb-6">Image Management</h2>
+      <h2 className="text-3xl font-bold mb-6">Ad Management</h2>
 
       {/* Filter Buttons */}
       <div className="flex justify-center space-x-4 mb-8">
@@ -98,14 +98,19 @@ const ImageManagement = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {filteredImages.map(image => (
           <div key={image.id} className={`shadow-md rounded-lg overflow-hidden ad-box ${image.approved ? 'bg-green-100' : image.rejected ? 'bg-red-100' : 'bg-gray-100'}`}>
-            <img src={image.image_url} alt={image.name} className="w-full h-auto object-cover" />
+            <img src={`http://localhost:8000/uploads${image.image_url}`} alt={image.name} className="w-full h-auto object-cover" />
             <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{image.name}</h3>
-              <p className="text-gray-700">{image.location}</p>
+              <h3 className="text-xl font-semibold mb-2">
+              Name: {image.name}
+              </h3>
+              <p className="text-gray-700">
+              Location: {image.location}
+              </p>
             </div>
             <div className="p-4 flex justify-between items-center">
+            
               <span className={`${image.approved ? 'text-green-500 font-semibold' : image.rejected ? 'text-red-500 font-semibold' : 'font-semibold'}`}>
-                {image.approved ? 'Accepted' : image.rejected ? 'Rejected' : 'Pending'}
+              Status:  {image.approved ? 'Accepted' : image.rejected ? 'Rejected' : 'Pending'}
               </span>
               {image.approved && !image.rejected && (
                 <button
