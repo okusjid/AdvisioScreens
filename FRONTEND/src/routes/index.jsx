@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SignedIn } from '@clerk/clerk-react';
 
 import Home from '../pages/Home';
-import Signup from '../pages/Signup';
-import Login from '../pages/Login';
 import Footer from '../components/Header-Footer/Footer';
 import Header from '../components/Header-Footer/Header';
 import Contact from '../pages/Contact';
@@ -24,6 +22,7 @@ import AdManagement from '../components/Admin/AdManagment';
 import Gallery from "../components/gallery/Gallery";
 import Dashboard1 from '../components/Dashboard/Dashboard1';
 import Location from '../pages/Location';
+import AdminMediaLibrary from '../components/Admin/Admin-MediaLibrary';
 
 
 const DefaultLayout = ({ children }) => {
@@ -43,8 +42,6 @@ const Routing = () => {
     <Router>
       <Routes>
         <Route path="/" element={<DefaultLayout><Home /></DefaultLayout>} />
-        <Route path="/login" element={<DefaultLayout><Login /></DefaultLayout>} />
-        <Route path="/signup" element={<DefaultLayout><Signup /></DefaultLayout>} />
         <Route path="/contact" element={<DefaultLayout><Contact /></DefaultLayout>} />
         <Route path="/about" element={<DefaultLayout><AboutPage /></DefaultLayout>} />
         
@@ -63,6 +60,7 @@ const Routing = () => {
           <Route path='user-management' element={<UserManagementPage />} />
           <Route path='ad-management' element={<AdManagement />} />
           <Route path="" element={<AdminHomePage />} />
+          <Route path="media-library" element={<AdminMediaLibrary />} />
           <Route path="*" element={<ErrorPage1 />} />
          
 
