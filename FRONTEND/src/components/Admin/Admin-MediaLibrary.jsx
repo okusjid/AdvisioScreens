@@ -4,6 +4,7 @@ const MediaLibrary = () => {
   const [mediaList, setMediaList] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState(null);
   const [zoomed, setZoomed] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchMediaList();
@@ -31,11 +32,24 @@ const MediaLibrary = () => {
     setZoomed(false);
   };
 
+  const filteredMediaList = mediaList.filter(media =>
+    media.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="media-library text-white min-h-screen py-10 relative">
-      <h1 className="text-3xl font-bold mb-8 text-center">Media Library</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center" style={{ color: "black" }}>Media Library</h1>
+      <input
+  type="text"
+  placeholder="Search by Ad Name"
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  className="w-full px-4 py-2 mb-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-blue-500 text-gray-800 bg-white border border-gray-300 placeholder-gray-500 focus:border-blue-500"
+  style={{ transition: 'border-color 0.3s ease' }}
+/>
+
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {mediaList.map((media) => (
+        {filteredMediaList.map((media) => (
           <div key={media.id} className="media-item cursor-pointer rounded-lg overflow-hidden shadow-lg">
             <img
               src={`http://localhost:8000/uploads${media.image_url}`}
