@@ -48,7 +48,7 @@ const MediaLibrary = () => {
 
   return (
     <div className="media-library text-white min-h-screen py-10 relative">
-      <h1 className="text-3xl font-bold mb-8 text-center">Media Library</h1>
+      <h1 className="text-3xl font-bold mb-6 text-black">Media Library</h1>
       <input
         type="text"
         placeholder="Search by Ad Name"
