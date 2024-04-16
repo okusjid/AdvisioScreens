@@ -6,6 +6,18 @@ const ImageManagement = () => {
   const [approvedImages, setApprovedImages] = useState([]);
   const [rejectedImages, setRejectedImages] = useState([]);
   const [filter, setFilter] = useState('all');
+  const [mediaFilter, setMediaFilter] = useState('all'); // Added media filter state
+
+  // Filter buttons for media type
+  const filterMedia = (mediaType) => {
+    setMediaFilter(mediaType);
+  };
+
+  // Define getMediaType function before it's used
+  const getMediaType = (mediaUrl) => {
+    const extension = mediaUrl.split('.').pop().toLowerCase();
+    return extension === 'mp4' ? 'video' : 'image';
+  };
 
   useEffect(() => {
     fetchData();
@@ -82,78 +94,89 @@ const ImageManagement = () => {
   } else if (filter === 'rejected') {
     filteredImages = images.filter(image => image.rejected);
   }
- 
+
+  // Apply media filter
+  if (mediaFilter === 'image') {
+    filteredImages = filteredImages.filter(image => getMediaType(image.image_url) === 'image');
+  } else if (mediaFilter === 'video') {
+    filteredImages = filteredImages.filter(image => getMediaType(image.image_url) === 'video');
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold mb-6">Ad Management</h2>
-
       {/* Filter Buttons */}
       <div className="flex justify-center space-x-4 mb-8">
         <button onClick={() => filterImages('all')} className={`px-6 py-2 rounded-md transition duration-300 ${filter === 'all' ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>All</button>
         <button onClick={() => filterImages('approved')} className={`px-6 py-2 rounded-md transition duration-300 ${filter === 'approved' ? 'bg-green-600 text-white hover:bg-green-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>Approved</button>
         <button onClick={() => filterImages('rejected')} className={`px-6 py-2 rounded-md transition duration-300 ${filter === 'rejected' ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>Rejected</button>
+        <button onClick={() => filterMedia('image')} className={`px-6 py-2 rounded-md transition duration-300 ${mediaFilter === 'image' ? 'bg-yellow-600 text-white hover:bg-yellow-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>Images</button>
+        <button onClick={() => filterMedia('video')} className={`px-6 py-2 rounded-md transition duration-300 ${mediaFilter === 'video' ? 'bg-purple-600 text-white hover:bg-purple-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>Videos</button>
       </div>
 
       {/* Image Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {filteredImages.map(image => (
-  <div key={image.id} className={`shadow-md rounded-lg overflow-hidden ad-box ${image.approved ? 'bg-green-100' : image.rejected ? 'bg-red-100' : 'bg-gray-100'}`}>
-    {/* Image display and details */}
-    <div className="p-4">
-      {/* Image display */}
-      <img src={`http://localhost:8000/uploads${image.image_url}`} alt={image.name} className="w-full h-60 object-cover mb-10" />
-      {/* Image name */}
-      <h3 className="text-xl font-semibold mb-2">
-        Name: {image.name}
-      </h3>
-      {/* Image location */}
-      <p className="text-gray-700">
-        Location: {image.location}
-      </p>
-    </div>
-    {/* Image status and actions */}
-    <div className="p-4 flex justify-between items-center">
-      {/* Displaying image status */}
-      <span className={`${image.approved ? 'text-green-500 font-semibold' : image.rejected ? 'text-red-500 font-semibold' : 'font-semibold'}`}>
-        Status:  {image.approved ? 'Accepted' : image.rejected ? 'Rejected' : 'Pending'}
-      </span>
-      {/* Conditional rendering of approval and rejection buttons */}
-      {image.approved && !image.rejected && (
-        <button
-          onClick={() => handleSetRejection(image.id, true)}
-          className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-700"
-        >
-          Reject
-        </button>
-      )}
-      {!image.approved && image.rejected && (
-        <button
-          onClick={() => handleSetApproval(image.id, true)}
-          className="bg-green-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-green-700"
-        >
-          Approve
-        </button>
-      )}
-      {/* Conditional rendering of both approval and rejection buttons for pending status */}
-      {!image.approved && !image.rejected && (
-        <>
-          <button
-            onClick={() => handleSetApproval(image.id, true)}
-            className="bg-green-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-green-700"
-          >
-            Approve
-          </button>
-          <button
-            onClick={() => handleSetRejection(image.id, true)}
-            className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-700"
-          >
-            Reject
-          </button>
-        </>
-      )}
-    </div>
-  </div>
-))}
+        {filteredImages.map(image => (
+          <div key={image.id} className={`shadow-md rounded-lg overflow-hidden ad-box ${image.approved ? 'bg-green-100' : image.rejected ? 'bg-red-100' : 'bg-gray-100'}`}>
+            {/* Media display */}
+            <div className="p-4">
+              {getMediaType(image.image_url) === 'image' ? (
+                <img src={`http://localhost:8000/uploads${image.image_url}`} alt={image.name} className="w-full h-60 object-cover mb-10" />
+              ) : (
+                <video controls className="w-full h-60 mb-10">
+                  <source src={`http://localhost:8000/uploads${image.image_url}`} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+              {/* Image name */}
+              <h3 className="text-xl font-semibold mb-2">
+                Name: {image.name}
+              </h3>
+              {/* Image location */}
+              <p className="text-gray-700">
+                Location: {image.location}
+              </p>
+            </div>
+            {/* Image status and actions */}
+            <div className="p-4 flex justify-between items-center">
+              <span className={`${image.approved ? 'text-green-500 font-semibold' : image.rejected ? 'text-red-500 font-semibold' : 'font-semibold'}`}>
+                Status:  {image.approved ? 'Accepted' : image.rejected ? 'Rejected' : 'Pending'}
+              </span>
+              {image.approved && !image.rejected && (
+                <button
+                  onClick={() => handleSetRejection(image.id, true)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-700"
+                >
+                  Reject
+                </button>
+              )}
+              {!image.approved && image.rejected && (
+                <button
+                  onClick={() => handleSetApproval(image.id, true)}
+                  className="bg-green-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-green-700"
+                >
+                  Approve
+                </button>
+              )}
+              {!image.approved && !image.rejected && (
+                <>
+                  <button
+                    onClick={() => handleSetApproval(image.id, true)}
+                    className="bg-green-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-green-700"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    onClick={() => handleSetRejection(image.id, true)}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md ml-4 hover:bg-red-700"
+                  >
+                    Reject
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
