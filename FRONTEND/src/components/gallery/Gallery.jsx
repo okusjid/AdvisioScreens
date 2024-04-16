@@ -13,19 +13,24 @@ const Gallery = () => {
     }
   }, []); // Empty dependency array ensures the effect runs only once
 
-  const fetchRandomImages = () => {
+  const fetchRandomImages = async () => {
     // Updated URL to fetch billboard-related images
     const apiUrl = "https://source.unsplash.com/random/800x600?billboard";
 
-    // Fetching 9 random images
-    const fetchPromises = Array.from({ length: 10 }, () => fetch(apiUrl));
-
-    Promise.all(fetchPromises)
-      .then((responses) =>
-        Promise.all(responses.map((response) => response.url))
-      )
-      .then((urls) => setImages(urls))
-      .catch((error) => console.error("Error fetching images:", error));
+    try {
+      const responses = await Promise.all(
+        Array.from({ length: 10 }, () => fetch(apiUrl))
+      );
+      const urls = await Promise.all(
+        responses.map(async (response) => {
+          const blob = await response.blob();
+          return URL.createObjectURL(blob);
+        })
+      );
+      setImages(urls);
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
   };
 
   const handleImageLoad = (index) => {
