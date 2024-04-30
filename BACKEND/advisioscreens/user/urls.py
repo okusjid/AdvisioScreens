@@ -11,6 +11,7 @@ urlpatterns = [
     path("feedback_form/", views.FeedbackView.as_view(), name="feedback_form"),
     path("get-feedback-count/", views.get_feedback, name="get-feedback-count"),
     path("get-rejected-items/", views.get_rejected_items, name="get-rejected-items"),
+    path("get-feedback/", views.get_feedback_for_ad, name="get-feedback-for-ad"),
     path('save_user_data/', views.save_user_data, name='save_user_data'),
     path('get_user_role/', views.get_user_role, name='get_user_role'),
     path('set_user_role/', views.set_user_role, name='set_user_role'),

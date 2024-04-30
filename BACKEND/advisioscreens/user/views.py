@@ -256,7 +256,7 @@ class FeedbackView(APIView):
                 {"success": False, "error": "Feedback params not found"}, status=400
             )
 
-
+@csrf_exempt   
 def get_feedback(request):
     feedback_data = Feedback.objects.all()
     feedback_counts = defaultdict(int)
@@ -277,6 +277,20 @@ def get_feedback(request):
     }
     return JsonResponse(feedback)
 
+# Get feedback for a specific ads
+def get_feedback_for_ad(request):
+    if request.method == 'GET':
+        item_id = request.GET.get('item_id')
+        if item_id:
+            feedback_data = Feedback.objects.filter(item_id=item_id)
+            feedback_counts = defaultdict(int)
+            for feedback in feedback_data:
+                feedback_counts[feedback.option_id] += 1
+            return JsonResponse(feedback_counts)
+        else:
+            return JsonResponse({'error': 'Missing item_id parameter.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Only GET requests are allowed.'}, status=400)
 
 def get_user_role(request):
     if request.method == 'GET':
