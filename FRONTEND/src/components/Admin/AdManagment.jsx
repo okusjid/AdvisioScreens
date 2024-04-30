@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const ImageManagement = () => {
   const [images, setImages] = useState([]);
-  const [approvedImages, setApprovedImages] = useState([]);
-  const [rejectedImages, setRejectedImages] = useState([]);
+  // const [approvedImages, setApprovedImages] = useState([]);
+  // const [rejectedImages, setRejectedImages] = useState([]);
   const [filter, setFilter] = useState('all');
   const [mediaFilter, setMediaFilter] = useState('all'); // Added media filter state
 

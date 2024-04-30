@@ -38,7 +38,7 @@ const FeedbackForm = () => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/feedback_form/",
+        "http://localhost:8000/api/get-feedback/",
         {
           option_id: selectedOptionId,
           image_id: imageId,
