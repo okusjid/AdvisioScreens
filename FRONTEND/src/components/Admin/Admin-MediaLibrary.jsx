@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+
 const MediaLibrary = () => {
   const [mediaList, setMediaList] = useState([]);
   const [selectedMedia, setSelectedMedia] = useState(null);
@@ -84,6 +85,7 @@ const MediaLibrary = () => {
             <div className="p-4 bg-white">
               <p className="text-lg font-semibold text-gray-800 mb-2">{media.name}</p>
               <p className="text-sm text-gray-600">{media.location}</p>
+              <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md" onClick={()=>console.log("Hi")}>Generate Report</button>
             </div>
           </div>
         ))}

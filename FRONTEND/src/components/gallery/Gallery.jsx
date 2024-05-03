@@ -3,6 +3,7 @@ import "./Gallery.css"; // Import CSS file for animations
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading status
   const isInitialMount = useRef(true); // Ref to track initial mount
 
   useEffect(() => {
@@ -28,6 +29,7 @@ const Gallery = () => {
         })
       );
       setImages(urls);
+      setLoading(false); // Set loading to false after images are fetched
     } catch (error) {
       console.error("Error fetching images:", error);
     }
@@ -41,23 +43,27 @@ const Gallery = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={`image-container rounded-lg overflow-hidden shadow-lg ${
-              image.loaded ? "loaded" : ""
-            }`}
-          >
-            <img
-              className="image"
-              src={image}
-              alt=""
-              onLoad={() => handleImageLoad(index)}
-            />
-          </div>
-        ))}
-      </div>
+      {loading ? ( // Conditionally render loading animation
+        <div className="loading-animation loader"></div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={`image-container rounded-lg overflow-hidden shadow-lg ${
+                image.loaded ? "loaded" : ""
+              }`}
+            >
+              <img
+                className="image"
+                src={image}
+                alt=""
+                onLoad={() => handleImageLoad(index)}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

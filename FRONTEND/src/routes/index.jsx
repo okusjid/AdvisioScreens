@@ -24,6 +24,7 @@ import Dashboard1 from '../components/Dashboard/Dashboard1';
 import Location from '../pages/Location';
 import AdminMediaLibrary from '../components/Admin/Admin-MediaLibrary';
 import FeedbackCollection from '../components/Admin/Admin-Feedback';
+import AdminGamification from '../components/Admin/Admin-Gamification';
 
 
 const DefaultLayout = ({ children }) => {
@@ -63,6 +64,7 @@ const Routing = () => {
           <Route path="" element={<AdminHomePage />} />
           <Route path="media-library" element={<AdminMediaLibrary />} />
           <Route path='feedback-collection' element={<FeedbackCollection />} />
+          <Route path="gamification" element={<AdminGamification />} />
           <Route path="*" element={<ErrorPage1 />} />
          
 
