@@ -1,30 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DoughnutChart from "../../charts/DoughnutChart";
 
 // Import utilities
 import { tailwindConfig } from "../../utils/Utils";
 
-function DashboardCard06() {
-  const chartData = {
-    labels: ["Bata Ad", "Cougar Ad", "Other"],
-    datasets: [
-      {
-        label: "Top Countries",
-        data: [35, 30, 35],
-        backgroundColor: [
-          tailwindConfig().theme.colors.indigo[500],
-          tailwindConfig().theme.colors.blue[400],
-          tailwindConfig().theme.colors.indigo[800],
+function DashboardCard06({ adList }) {
+  const [chartData, setChartData] = useState(null);
+
+  useEffect(() => {
+    if (adList && adList.length > 0) {
+      const labels = adList.map(ad => ad.name);
+      const data = adList.map(ad => ad.viewers);
+
+      const newChartData = {
+        labels: labels,
+        datasets: [
+          {
+            label: "Top Ads",
+            data: data,
+            backgroundColor: [
+              tailwindConfig().theme.colors.indigo[500],
+              tailwindConfig().theme.colors.blue[400],
+              tailwindConfig().theme.colors.indigo[800],
+              tailwindConfig().theme.colors.indigo[100],
+              tailwindConfig().theme.colors.blue[800],
+              tailwindConfig().theme.colors.indigo[200],
+              // Add more colors as needed
+            ],
+            hoverBackgroundColor: [
+              tailwindConfig().theme.colors.indigo[600],
+              tailwindConfig().theme.colors.blue[500],
+              tailwindConfig().theme.colors.indigo[900],
+              tailwindConfig().theme.colors.indigo[200],
+              tailwindConfig().theme.colors.blue[900],
+              tailwindConfig().theme.colors.indigo[300],
+              // Add more colors as needed
+            ],
+            borderWidth: 0,
+          },
         ],
-        hoverBackgroundColor: [
-          tailwindConfig().theme.colors.indigo[600],
-          tailwindConfig().theme.colors.blue[500],
-          tailwindConfig().theme.colors.indigo[900],
-        ],
-        borderWidth: 0,
-      },
-    ],
-  };
+      };
+      console.log('chart', newChartData)
+      setChartData(newChartData);
+    }
+  }, [adList]);
 
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">

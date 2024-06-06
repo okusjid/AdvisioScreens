@@ -38,7 +38,7 @@ const FeedbackForm = () => {
     e.preventDefault(); // Prevent default form submission behavior
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/get-feedback/",
+        "http://localhost:8000/api/feedback_form/",
         {
           option_id: selectedOptionId,
           image_id: imageId,
@@ -50,7 +50,6 @@ const FeedbackForm = () => {
           },
         }
       );
-      console.log(response.data);
       setSelectedOptionId("");
       Navigate("/");
     } catch (error) {

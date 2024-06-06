@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 function DashboardCard13({reject}) {
-  console.log("rejected",reject)
   return (
     <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">

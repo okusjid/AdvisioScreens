@@ -7,7 +7,7 @@ import EditMenu from "../../components/DropdownEditMenu";
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
 
-function DashboardCard01() {
+function DashboardCard01({ weekly }) {
   const chartData = {
     labels: [
       "12-01-2020",
@@ -127,7 +127,7 @@ function DashboardCard01() {
         </div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-dark:text-slate-800 mr-2">
-            24,780
+            {weekly}
           </div>
           <div className="text-sm font-semibold text-white px-1.5 bg-emerald-500 rounded-full">
             +49%

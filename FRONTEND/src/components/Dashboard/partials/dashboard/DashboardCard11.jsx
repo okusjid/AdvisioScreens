@@ -111,13 +111,11 @@ function DashboardCard11() {
 
   useEffect(() => {
     
-    console.log('get-feedback-count')
     const fetchFeedback = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/get-feedback-count/');
         const feedbackCounts = response.data['feedback_counts'];
         const fetched = response.data['feedback_data'];
-        console.log('feedback', fetched);
         setFeedbackData(fetched);
         setChartData(prevChartData => ({
           ...prevChartData,
@@ -127,8 +125,6 @@ function DashboardCard11() {
           }))
         }));
         
-
-        console.log("feedback", chartData)
       } catch (error) {
         console.error('Error getting feedback counts:', error);
       }

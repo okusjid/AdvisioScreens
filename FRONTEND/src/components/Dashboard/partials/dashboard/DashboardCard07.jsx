@@ -1,32 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import locations from "../../../Locations";
 import {useUser} from '@clerk/clerk-react';
 
-function DashboardCard07() {
-  const [images, setImages] = useState([]);
-  const [videos, setVideos] = useState([]);
-  const user = useUser();
+function DashboardCard07({ images }) {
 
-  useEffect(() => {
-    console.log('get-approved-images user id: ',user.user.id )
-    const fetchImages = async () => {
-      try {
-        const user_id=user.user.id 
-        const response = await axios.get('http://localhost:8000/api/get-approved-images/',{
-          params: {
-            user_id: user_id
-          }
-        });
-        setImages(response.data);
-        console.log(response.data)
-      } catch (error) {
-        console.error('Error fetching images:', error);
-      }
-    };
-
-    fetchImages();
-  }, []);
   return (
     <div className="col-span-full xl:col-span-8 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
@@ -53,9 +31,9 @@ function DashboardCard07() {
                 <th className="p-2">
                   <div className="font-semibold text-center">Impressions</div>
                 </th>
-                <th className="p-2">
+                {/* <th className="p-2">
                   <div className="font-semibold text-center">Conversion</div>
-                </th>
+                </th> */}
               </tr>
             </thead>
             {/* Table body */}
@@ -84,17 +62,17 @@ function DashboardCard07() {
                     </td>
           
                     <td className="p-2">
-                        <div className="text-center">NULL</div>
+                        <div className="text-center">{image.cost}</div>
                     </td>
                     <td className="p-2">
-                        <div className="text-center text-emerald-500">NULL</div>
+                        <div className="text-center text-emerald-500">{image.location}</div>
                     </td>
                     <td className="p-2">
-                        <div className="text-center">NULL</div>
+                        <div className="text-center text-sky-500">{image.viewers}</div>
                     </td>
-                    <td className="p-2">
+                    {/* <td className="p-2">
                         <div className="text-center text-sky-500">NULL</div>
-                    </td>
+                    </td> */}
                   </tr>
               ))}
           </tbody>

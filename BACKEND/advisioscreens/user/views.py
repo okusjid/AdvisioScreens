@@ -11,6 +11,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 from collections import defaultdict
+import os
 
 
 @csrf_exempt
@@ -339,3 +340,30 @@ def get_user_data(request):
         return JsonResponse(user_data, safe=False)
     else:
         return JsonResponse({'error': 'Only GET requests are allowed.'}, status=400)    
+
+@csrf_exempt 
+def update_viewers(request):
+    if request.method == 'POST':
+        try:
+            print("Current working directory:", os.getcwd())
+            data = json.loads(request.body)
+            print(data)
+            results = {}
+
+            for location in data:
+                if os.path.isfile('files/' + location['trafficFile']):
+                    with open('files/' + location['trafficFile'], 'r') as file:
+                        line_count = sum(1 for line in file)
+                        results[location['name']] = line_count
+                else:
+                    results[location['name']] = 0
+
+            return JsonResponse(results, status=200)
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)

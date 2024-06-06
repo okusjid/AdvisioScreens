@@ -28,6 +28,7 @@ import axios from "axios";
 import { styled } from "@mui/material/styles";
 import { useUser } from "@clerk/clerk-react";
 import TextField from "@mui/material/TextField";
+import locations from "../../Locations";
 
 const style = {
   position: "absolute",
@@ -68,8 +69,34 @@ function Dashboard() {
   const [images, setImages] = useState([]);
   const [reject, setRejected] = useState([]);
   const [name, setName] = useState(null);
+  const [viewers, setViewers] = useState({});
+  const [approved, setApproved] = useState([]);
+
+    const fetchApproved = async () => {
+      try {
+        console.log(user)
+        const user_id=user.user.id 
+        const response = await axios.get('http://localhost:8000/api/get-approved-images/',{
+          params: {
+            user_id: user_id
+          }
+        });
+        const updatedImages = response.data.map((image) => {
+          const views = viewers[image.location] || 0;
+          const location = locations.find((loc) => loc.name === image.location);
+          const cost = location ? location.price * views : 0;
+          return { ...image, viewers: views, cost: cost };
+        });
+        setApproved(updatedImages);
+        console.log(updatedImages)
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+
   const fetchImages = async () => {
     try {
+      console.log(user)
       const user_id = user.user.id;
       const response = await axios.get(
         "http://localhost:8000/api/get-unapproved-images/",
@@ -80,11 +107,19 @@ function Dashboard() {
         }
       );
       setImages(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching images:", error);
     }
   };
+
+  const updateViewers = async () => {
+    await axios.post("http://localhost:8000/api/update-viewers/", locations)
+    .then((r) => {
+      setViewers(r.data)
+      fetchApproved()
+    })
+    .catch((e) => console.error(e))
+  }
 
   const fetchRejected = async () => {
     try {
@@ -98,32 +133,22 @@ function Dashboard() {
         }
       );
       setRejected(response.data);
-      console.log("dashboard rejected", response.data);
     } catch (error) {
       console.error("Error fetching rejected images:", error);
     }
   };
 
-  useEffect(() => {
-    console.log("get-rejected-items user id: ", user.user.id);
-
-    fetchRejected();
-  }, []);
+  // useEffect(() => {
+  //   fetchApproved();
+  // }, [updateViewers]);
 
   useEffect(() => {
-    console.log("get-unapproved-images user id: ", user.user.id);
-
+    updateViewers();
     fetchImages();
+    fetchRejected();
+    // fetchApproved();
   }, []);
-
-  const locations = [
-    { name: "Location 1", viewers: 1000, price: 50 },
-    { name: "Location 2", viewers: 2000, price: 75 },
-    { name: "Location 3", viewers: 1500, price: 60 },
-    { name: "Location 4", viewers: 1800, price: 70 },
-    { name: "Location 5", viewers: 2500, price: 100 },
-  ];
-  console.log("User:", user);
+  
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
   };
@@ -133,8 +158,6 @@ function Dashboard() {
   };
 
   const handleSubmit = async () => {
-    console.log(selectedLocation, file);
-    console.log("submit user", user.user.id);
     const user_id = user.user.id;
     try {
       const response = await axios.post(
@@ -151,7 +174,6 @@ function Dashboard() {
           },
         }
       );
-      console.log(response.data);
       fetchImages();
     } catch (error) {
       console.error("Error:", error);
@@ -160,8 +182,6 @@ function Dashboard() {
   };
 
   const handleSubmitVideo = async () => {
-    console.log(selectedLocation, file);
-
     const user_id = user.user.id;
     try {
       const response = await axios.post(
@@ -178,13 +198,14 @@ function Dashboard() {
           },
         }
       );
-      console.log(response.data);
       fetchImages();
     } catch (error) {
       console.error("Error:", error);
     }
     vidsetOpen(false);
   };
+
+  const totalViewers = approved.reduce((acc, location) => acc + location.viewers, 0);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -255,7 +276,7 @@ function Dashboard() {
                                         handleLocationSelect(location)
                                       }
                                     />
-                                    {location.name} - {location.viewers} viewers
+                                    {location.name} - {viewers[location.name]} viewers
                                     - ${location.price}
                                   </label>
                                 </li>
@@ -342,7 +363,7 @@ function Dashboard() {
                                         handleLocationSelect(location)
                                       }
                                     />
-                                    {location.name} - {location.viewers} viewers
+                                    {location.name} - {viewers[location.name]} viewers
                                     - ${location.price}
                                   </label>
                                 </li>
@@ -393,19 +414,19 @@ function Dashboard() {
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
               {/* Line chart (Acme Plus) */}
-              <DashboardCard01 />
+              <DashboardCard01 weekly={totalViewers * 7}/>
               {/* Line chart (Acme Advanced) */}
-              <DashboardCard02 />
+              <DashboardCard02 monthly={totalViewers * 30}/>
               {/* Line chart (Acme Professional) */}
-              <DashboardCard03 />
+              <DashboardCard03 yearly={totalViewers * 365}/>
               {/* Bar chart (Direct vs Indirect) */}
               <DashboardCard04 />
               {/* Line chart (Real Time Value) */}
               <DashboardCard05 />
               {/* Doughnut chart (Top Countries) */}
-              <DashboardCard06 />
+              <DashboardCard06 adList={approved}/>
               {/* Table (Top Channels) */}
-              <DashboardCard07 />
+              <DashboardCard07 images={approved}/>
               {/* Line chart (Sales Over Time) */}
              
               {/* Stacked bar chart (Sales VS Refunds) */}
@@ -415,7 +436,7 @@ function Dashboard() {
               {/* Card (Reasons for Refunds) */}
               <DashboardCard11 />
               {/* Card (Recent Activity) */}
-              <DashboardCard12 locations={locations} />
+              <DashboardCard12 locations={viewers} />
               {/* Card (Income/Expenses) */}
               <DashboardCard13 reject={reject} />
             </div>

@@ -2,6 +2,8 @@ import React, { useState, useCallback, useRef } from "react";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+import locations from "../Locations";
+
 function Navbar({ map, currPosition }) {
   const routingRef = useRef(null);
 
@@ -12,7 +14,6 @@ function Navbar({ map, currPosition }) {
   let markerCordinates = useRef([]);
   // Center on marker
   const centerMarker = (curr) => {
-    console.log(curr);
     map.setView(curr, 13);
   };
 
@@ -53,28 +54,30 @@ function Navbar({ map, currPosition }) {
         {/* Make a list of all the places */}
         <div className="mt-4 h-[92%] overflow-y-scroll no-scrollbar">
           <div>
-            {coordinates.map((coordinates, index) => {
+            {locations.map((loc, index) => {
               //Make two buttons Center and direction
               return (
-                <div className="flex items-center space-x-2 justify-evenly mt-4 border-2 py-5">
-                  <p>{`Location ${index + 1}`}</p>
-                  <button
-                    className="bg-blue-500 text-white px-3 py-1 rounded-md"
-                    onClick={() => {
-                      centerMarker(coordinates);
-                    }}
-                  >
-                    Center
-                  </button>
-                  <button
-                    className="bg-blue-500 text-white px-3 py-1 rounded-md"
-                    onClick={() => {
-                      changeMarkerCordinates(coordinates);
-                      setRoute();
-                    }}
-                  >
-                    Direction
-                  </button>
+                <div className="flex items-center space-x-2 justify-between mt-4 border-2 py-5 px-4">
+                  <p>{loc.name}</p>
+                  <div className="flex gap-2">
+                    <button
+                      className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                      onClick={() => {
+                        centerMarker([loc.latitude, loc.longitude]);
+                      }}
+                    >
+                      Center
+                    </button>
+                    <button
+                      className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                      onClick={() => {
+                        changeMarkerCordinates([loc.latitude, loc.longitude]);
+                        setRoute();
+                      }}
+                    >
+                      Direction
+                    </button>
+                  </div>
                 </div>
               );
             })}
