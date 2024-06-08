@@ -2,6 +2,7 @@ from django.urls import path
 from user import views
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import *
 
 urlpatterns = [
     path("upload/", views.UploadImage.as_view(), name="upload_image"),
@@ -21,6 +22,8 @@ urlpatterns = [
     path('set-image-rejected/', views.set_image_rejected, name='set_image_rejected'),
     path('get-all-rejected-images/', views.get_all_rejected_images, name='get_all_rejected_images'),
     path('get-all-approved-images/', views.get_all_accepted_images, name='get_all_accepted_images'),
+    path('gamification/', views.update_gamification, name='update_gamification'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

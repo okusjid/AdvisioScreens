@@ -11,8 +11,44 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 from collections import defaultdict
+from rest_framework import generics
+from .models import Gamification
+from .serializers import GamificationSerializer
+from django.utils import timezone
 
+@csrf_exempt
+def update_gamification(request):
+    if request.method == 'GET':
+        try:
+            for user in User.objects.all():    
+                gamification = Gamification.objects.get(user=user)
+                data = {
+                    'user_id': user.clerk_user_id,
+                    'points': gamification.points,
+                    'level': gamification.level,
+                    'age_points': gamification.age_points,
+                    'upload_activity_points': gamification.upload_activity_points
+                }
+                return JsonResponse(data)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found.'}, status=404)
+        except Gamification.DoesNotExist:
+            return JsonResponse({'error': 'Gamification record not found.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'An error occurred: {str(e)}'}, status=500)
 
+    elif request.method == 'POST':
+        try:
+            for user in User.objects.all():
+                print(user)               
+                gamification = Gamification.objects.update_or_create(user=user)
+
+            return JsonResponse({'message': 'Gamification data updated successfully.'})
+        except Exception as e:
+            return JsonResponse({'error': f'An error occurred: {str(e)}'}, status=500)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+     
 @csrf_exempt
 def save_user_data(request):
     if request.method == 'POST':
@@ -38,7 +74,8 @@ def save_user_data(request):
                 email=email,
                 role=role
             )
-            return JsonResponse({'message': 'New user created successfully.'})
+            Gamification.objects.create(user=user)
+            return JsonResponse({'message': 'New user created successfully.'}, )
     else:
         return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
 
@@ -55,6 +92,7 @@ class UploadImage(APIView):
             Upload.objects.create(
                 clerk_id=user_id, name=name, location=loc_name, item=image
             )
+          
             return JsonResponse({"success": True})
         else:
             return JsonResponse(
@@ -96,6 +134,7 @@ def get_all_images(request):
                 "image_url": img.item.url[8:],
             }
         )
+      
     return JsonResponse(images_data, safe=False)
 
 #set-image-approved
