@@ -47,6 +47,21 @@ const MediaLibrary = () => {
     return extension === 'mp4' ? 'video' : 'image';
   };
 
+  const handleReportCreation = async (mediaId) => {
+    const media = mediaList.find(media => media.id === mediaId);
+    if (media) {
+        const formData = new FormData();
+        formData.append('media', media.file);  // Ensure you have a file object here
+
+        const response = await fetch('http://localhost:8000/api/analyze-media/', {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await response.json();
+        console.log(data.result);  // Display the result or handle it as needed
+    }
+};
+
   return (
     <div className="media-library text-white min-h-screen py-10 relative">
       <h1 className="text-3xl font-bold mb-6 text-black">Media Library</h1>
@@ -85,7 +100,7 @@ const MediaLibrary = () => {
             <div className="p-4 bg-white">
               <p className="text-lg font-semibold text-gray-800 mb-2">{media.name}</p>
               <p className="text-sm text-gray-600">{media.location}</p>
-              <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md" onClick={()=>console.log("Hi")}>Generate Report</button>
+              <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md" onClick={()=>console.log("url is: ", `/uploads${media.image_url}`)}>Generate Report</button>
             </div>
           </div>
         ))}

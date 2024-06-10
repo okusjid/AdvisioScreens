@@ -15,6 +15,81 @@ from rest_framework import generics
 from .models import Gamification
 from .serializers import GamificationSerializer
 from django.utils import timezone
+import os
+import requests
+import json
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Content Moderation
+def analyze_media(media_path):
+    # Replace the path delimiters if needed and ensure it's a string
+    media_path = media_path.replace('\\', '/')
+    # add this before the path "C:\\Users\\usjid\\OneDrive\\Desktop\\AdvisioScreens\\BACKEND\\AdvisioScreens\\"
+    media_path = "C:\\Users\\usjid\\OneDrive\\Desktop\\AdvisioScreens\\BACKEND\\AdvisioScreens\\" + media_path
+    print("Processed media path:", media_path)
+    
+    ## Determine file type
+    if media_path.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
+        api_url = 'https://api.sightengine.com/1.0/check.json'
+    elif media_path.lower().endswith('.mp4'):
+        api_url = 'https://api.sightengine.com/1.0/video/check-sync.json'
+    else:
+        return "Unsupported file type"
+
+    # API credentials (fetch from environment variables)
+    api_user = os.getenv('API_USER', 'default_user')
+    api_secret = os.getenv('API_SECRET', 'default_secret')
+
+    # Configure API parameters
+    params = {
+        'models': 'nudity-2.1,weapon,alcohol,recreational_drug,medical,offensive,scam,text-content,face-attributes,gore-2.0,violence',
+        'api_user': os.getenv('API_USER') or '1412173450',
+        'api_secret': os.getenv('API_SECRET') or '2KvxAtRyMDW52x6LJ3unrMKctjPF7cza',
+    }
+
+    # Send request to Sightengine API
+    with open(media_path, 'rb') as file:
+        files = {'media': file}
+        response = requests.post(api_url, files=files, data=params)
+        result = response.json()
+    
+    return analyze_results(result)
+
+def analyze_results(data):
+    messages = []
+    thresholds = {
+        'nudity': 0.02, 'weapon': 0.01, 'recreational_drug': 0.01, 'medical': 0.01,
+        'alcohol': 0.01, 'offensive': 0.01, 'scam': 0.05, 'violence': 0.01, 'gore': 0.01
+    }
+
+    # Example of handling different structures in data for images and videos
+    if 'nudity' in data and data['nudity']['none'] < (1 - thresholds['nudity']):
+        messages.append('Possible Nudity detected')
+    if 'weapon' in data and data.get('weapon', {}).get('classes', {}).get('firearm', 0) > thresholds['weapon']:
+        messages.append('Possible Firearm detected')
+    if 'recreational_drug' in data and data['recreational_drug']['prob'] > thresholds['recreational_drug']:
+        messages.append('Possible Recreational drug content detected')
+    if 'medical' in data and data['medical']['prob'] > thresholds['medical']:
+        messages.append('Possible Medical-related content detected')
+    if 'alcohol' in data and data['alcohol']['prob'] > thresholds['alcohol']:
+        messages.append('Possible Alcohol-related content detected')
+    if 'offensive' in data and data['offensive']['prob'] > thresholds['offensive']:
+        messages.append('Possible Offensive content detected')
+    if 'scam' in data and data['scam']['prob'] > thresholds['scam']:
+        messages.append('Possible scam detected')
+    if 'violence' in data and data['violence']['prob'] > thresholds['violence']:
+        messages.append('Possible Violence detected')
+    if 'gore' in data and data['gore']['prob'] > thresholds['gore']:
+        messages.append('Possible Gore detected')
+  
+    if not messages:
+        return "Posibbly No concerning content detected."
+    return "Possible Alert: " + "; ".join(messages) + "."
+
+#Ends here
+
 
 @csrf_exempt
 def update_gamification(request):
@@ -378,3 +453,20 @@ def get_user_data(request):
         return JsonResponse(user_data, safe=False)
     else:
         return JsonResponse({'error': 'Only GET requests are allowed.'}, status=400)    
+
+   
+@csrf_exempt
+def analyze_media_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            print("Yahan path hai = ",data)
+            media_path = data.get("media_path")
+            if not media_path:
+                return JsonResponse({'error': 'media_path parameter missing'}, status=400)
+            result = analyze_media(media_path)
+            return JsonResponse(result, safe=False)
+        except json.decoder.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
