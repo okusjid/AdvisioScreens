@@ -8,7 +8,7 @@ const menuItems = [
     { icon: FaAd, text: 'Ad Management', to: '/admin/ad-management' },
     { icon: FaFolderOpen, text: 'Media Library', to: '/admin/media-library' },
     { icon: FaComment, text: 'Feedback Collection', to: '/admin/feedback-collection' },
-    { icon: FaGamepad, text: 'Gamification', to: '/admin/gamification' },
+    // { icon: FaGamepad, text: 'Gamification', to: '/admin/gamification' },
     { icon: FaComment, text: 'Contact Messages', to: '/admin/contact-messages' },
 ];
 
