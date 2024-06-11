@@ -88,7 +88,7 @@ DATABASES = {
         "USER": "postgres",
         "PASSWORD": "password123",
         "HOST": "localhost",  # Set to empty string for localhost.
-        "PORT": "5432",  # Set to empty string for default.
+        "PORT": "5433",  # Set to empty string for default.
     }
 }
 
