@@ -25,9 +25,9 @@ load_dotenv()
 # Content Moderation
 def analyze_media(media_path):
     # Replace the path delimiters if needed and ensure it's a string
-    media_path = media_path.replace('\\', '/')
     # add this before the path "C:\\Users\\usjid\\OneDrive\\Desktop\\AdvisioScreens\\BACKEND\\AdvisioScreens\\"
-    media_path = "C:\\Users\\usjid\\OneDrive\\Desktop\\AdvisioScreens\\BACKEND\\AdvisioScreens\\" + media_path
+    media_path = "C:\\Users\\usjid\\OneDrive\\Desktop\\AdvisioScreens\\BACKEND\\AdvisioScreens\\uploads/" + media_path
+    media_path = media_path.replace('\\', '/')
     print("Processed media path:", media_path)
     
     ## Determine file type
@@ -85,8 +85,8 @@ def analyze_results(data):
         messages.append('Possible Gore detected')
   
     if not messages:
-        return "Posibbly No concerning content detected."
-    return "Possible Alert: " + "; ".join(messages) + "."
+        return "Posibly there is No concerning content in the media."
+    return " " + "; ".join(messages) + "."
 
 #Ends here
 
