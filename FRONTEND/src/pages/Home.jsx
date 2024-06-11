@@ -73,7 +73,7 @@ const Home = () => {
     if (isSignedIn && userRole) {
       if (userRole === 'admin') {
         console.log('Redirecting to admin page');
-        navigate('/admin'); // Use navigate for navigation
+        navigate('/admin/user-management'); // Use navigate for navigation
       } else {
         console.log('Redirecting to user page');
         navigate('/'); // Redirect to user page for non-admin users
