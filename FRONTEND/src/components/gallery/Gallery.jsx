@@ -16,7 +16,7 @@ const Gallery = () => {
 
   const fetchRandomImages = async () => {
     // Updated URL to fetch billboard-related images
-    const apiUrl = "https://source.unsplash.com/random/800x600?billboard";
+    const apiUrl = "https://loremflickr.com/800/600/digitalbillboard";
 
     try {
       const responses = await Promise.all(
