@@ -22,8 +22,8 @@ const AdminHomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <Card title="Total Users" value="1,024" icon="👤" />
           <Card title="Monthly Revenue" value="$18,400" icon="💰" />
-          <Card title="Feedback Messages" value="320" icon="📬" />
-          <Card title="Active Subscriptions" value="928" icon="🔔" />
+          <Card title="Messages" value="320" icon="📬" />
+          <Card title="Total Ads" value="928" icon="🔔" />
         </div>
         <div className="flex flex-wrap -mx-4">
           <div className="w-full md:w-1/2 px-4 mb-4 md:mb-0">
@@ -34,7 +34,7 @@ const AdminHomePage = () => {
           </div>
           <div className="w-full md:w-1/2 px-4">
             <div className="bg-white p-5 rounded-lg shadow">
-              <h2 className="text-2xl font-bold mb-4">Latest Feedback</h2>
+              <h2 className="text-2xl font-bold mb-4">Latest Messages</h2>
               {/* Example list. Replace with your data */}
               <ul>
                 <li className="border-b-2 mb-2 pb-2">Great service! - John Doe</li>

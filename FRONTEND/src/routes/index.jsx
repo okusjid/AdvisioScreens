@@ -64,7 +64,7 @@ const Routing = () => {
           <Route path="" element={<AdminHomePage />} />
           <Route path="media-library" element={<AdminMediaLibrary />} />
           <Route path='feedback-collection' element={<FeedbackCollection />} />
-          <Route path="gamification" element={<AdminGamification />} />
+          {/* <Route path="gamification" element={<AdminGamification />} /> */}
           <Route path="*" element={<ErrorPage1 />} />
          
 

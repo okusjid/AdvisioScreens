@@ -12,8 +12,118 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from collections import defaultdict
 import os
+from rest_framework import generics
+from .models import Gamification
+from .serializers import GamificationSerializer
+from django.utils import timezone
+import os
+import requests
+import json
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Content Moderation
+def analyze_media(media_path):
+    # Replace the path delimiters if needed and ensure it's a string
+    # add this before the path "C:\\Users\\usjid\\OneDrive\\Desktop\\AdvisioScreens\\BACKEND\\AdvisioScreens\\"
+    media_path = "C:\\Users\\usjid\\OneDrive\\Desktop\\AdvisioScreens\\BACKEND\\AdvisioScreens\\uploads/" + media_path
+    media_path = media_path.replace('\\', '/')
+    print("Processed media path:", media_path)
+    
+    ## Determine file type
+    if media_path.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
+        api_url = 'https://api.sightengine.com/1.0/check.json'
+    elif media_path.lower().endswith('.mp4'):
+        api_url = 'https://api.sightengine.com/1.0/video/check-sync.json'
+    else:
+        return "Unsupported file type"
+
+    # API credentials (fetch from environment variables)
+    api_user = os.getenv('API_USER', 'default_user')
+    api_secret = os.getenv('API_SECRET', 'default_secret')
+
+    # Configure API parameters
+    params = {
+        'models': 'nudity-2.1,weapon,alcohol,recreational_drug,medical,offensive,scam,text-content,face-attributes,gore-2.0,violence',
+        'api_user': os.getenv('API_USER') or '1412173450',
+        'api_secret': os.getenv('API_SECRET') or '2KvxAtRyMDW52x6LJ3unrMKctjPF7cza',
+    }
+
+    # Send request to Sightengine API
+    with open(media_path, 'rb') as file:
+        files = {'media': file}
+        response = requests.post(api_url, files=files, data=params)
+        result = response.json()
+    
+    return analyze_results(result)
+
+def analyze_results(data):
+    messages = []
+    thresholds = {
+        'nudity': 0.02, 'weapon': 0.01, 'recreational_drug': 0.01, 'medical': 0.01,
+        'alcohol': 0.01, 'offensive': 0.01, 'scam': 0.05, 'violence': 0.01, 'gore': 0.01
+    }
+
+    # Example of handling different structures in data for images and videos
+    if 'nudity' in data and data['nudity']['none'] < (1 - thresholds['nudity']):
+        messages.append('Possible Nudity detected')
+    if 'weapon' in data and data.get('weapon', {}).get('classes', {}).get('firearm', 0) > thresholds['weapon']:
+        messages.append('Possible Firearm detected')
+    if 'recreational_drug' in data and data['recreational_drug']['prob'] > thresholds['recreational_drug']:
+        messages.append('Possible Recreational drug content detected')
+    if 'medical' in data and data['medical']['prob'] > thresholds['medical']:
+        messages.append('Possible Medical-related content detected')
+    if 'alcohol' in data and data['alcohol']['prob'] > thresholds['alcohol']:
+        messages.append('Possible Alcohol-related content detected')
+    if 'offensive' in data and data['offensive']['prob'] > thresholds['offensive']:
+        messages.append('Possible Offensive content detected')
+    if 'scam' in data and data['scam']['prob'] > thresholds['scam']:
+        messages.append('Possible scam detected')
+    if 'violence' in data and data['violence']['prob'] > thresholds['violence']:
+        messages.append('Possible Violence detected')
+    if 'gore' in data and data['gore']['prob'] > thresholds['gore']:
+        messages.append('Possible Gore detected')
+  
+    if not messages:
+        return "Posibly there is No concerning content in the media."
+    return " " + "; ".join(messages) + "."
 
 
+
+@csrf_exempt
+def update_gamification(request):
+    if request.method == 'GET':
+        try:
+            for user in User.objects.all():    
+                gamification = Gamification.objects.get(user=user)
+                data = {
+                    'user_id': user.clerk_user_id,
+                    'points': gamification.points,
+                    'level': gamification.level,
+                    'age_points': gamification.age_points,
+                    'upload_activity_points': gamification.upload_activity_points
+                }
+                return JsonResponse(data)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found.'}, status=404)
+        except Gamification.DoesNotExist:
+            return JsonResponse({'error': 'Gamification record not found.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': f'An error occurred: {str(e)}'}, status=500)
+
+    elif request.method == 'POST':
+        try:
+            for user in User.objects.all():
+                print(user)               
+                gamification = Gamification.objects.update_or_create(user=user)
+
+            return JsonResponse({'message': 'Gamification data updated successfully.'})
+        except Exception as e:
+            return JsonResponse({'error': f'An error occurred: {str(e)}'}, status=500)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+     
 @csrf_exempt
 def save_user_data(request):
     if request.method == 'POST':
@@ -39,7 +149,8 @@ def save_user_data(request):
                 email=email,
                 role=role
             )
-            return JsonResponse({'message': 'New user created successfully.'})
+            Gamification.objects.create(user=user)
+            return JsonResponse({'message': 'New user created successfully.'}, )
     else:
         return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
 
@@ -55,6 +166,7 @@ class UploadImage(APIView):
             Upload.objects.create(
                 clerk_id=user_id, name=name, location=loc_name, item=image
             )
+          
             return JsonResponse({"success": True})
         else:
             return JsonResponse(
@@ -92,6 +204,7 @@ def get_all_images(request):
                 "image_url": img.item.url[8:],
             }
         )
+      
     return JsonResponse(images_data, safe=False)
 
 #set-image-approved
@@ -348,3 +461,20 @@ def update_viewers(request):
 
     else:
         return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
+
+@csrf_exempt
+def analyze_media_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            print("Yahan path hai = ",data)
+            media_path = data.get("media_path")
+            if not media_path:
+                return JsonResponse({'error': 'media_path parameter missing'}, status=400)
+            result = analyze_media(media_path)
+            return JsonResponse(result, safe=False)
+        except json.decoder.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
