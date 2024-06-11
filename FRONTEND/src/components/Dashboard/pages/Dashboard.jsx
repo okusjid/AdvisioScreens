@@ -56,7 +56,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function Dashboard() {
-  const user = useUser();
+  const user = useUser()
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -71,10 +71,11 @@ function Dashboard() {
   const [name, setName] = useState(null);
   const [viewers, setViewers] = useState({});
   const [approved, setApproved] = useState([]);
+  const [fetched, setFetched] = useState(false);
 
-    const fetchApproved = async () => {
+    const fetchApproved = async (impressions) => {
       try {
-        console.log(user)
+        // console.log('user -> ', user)
         const user_id=user.user.id 
         const response = await axios.get('http://localhost:8000/api/get-approved-images/',{
           params: {
@@ -82,13 +83,14 @@ function Dashboard() {
           }
         });
         const updatedImages = response.data.map((image) => {
-          const views = viewers[image.location] || 0;
+          const views = impressions[image.location] || 0;
           const location = locations.find((loc) => loc.name === image.location);
           const cost = location ? location.price * views : 0;
           return { ...image, viewers: views, cost: cost };
         });
         setApproved(updatedImages);
-        console.log(updatedImages)
+        setFetched(true);
+        // console.log(updatedImages)
       } catch (error) {
         console.error('Error fetching images:', error);
       }
@@ -96,7 +98,6 @@ function Dashboard() {
 
   const fetchImages = async () => {
     try {
-      console.log(user)
       const user_id = user.user.id;
       const response = await axios.get(
         "http://localhost:8000/api/get-unapproved-images/",
@@ -116,7 +117,7 @@ function Dashboard() {
     await axios.post("http://localhost:8000/api/update-viewers/", locations)
     .then((r) => {
       setViewers(r.data)
-      fetchApproved()
+      fetchApproved(r.data)
     })
     .catch((e) => console.error(e))
   }
@@ -138,16 +139,19 @@ function Dashboard() {
     }
   };
 
-  // useEffect(() => {
-  //   fetchApproved();
-  // }, [updateViewers]);
+  useEffect(() => {
+    if (!fetched && user.user) {
+      updateViewers();
+      fetchImages();
+      fetchRejected();
+      setFetched(true);
+    }
+    // fetchApproved();
+  }, [user]);
 
   useEffect(() => {
     updateViewers();
-    fetchImages();
-    fetchRejected();
-    // fetchApproved();
-  }, []);
+  }, [fetched]);
   
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
@@ -277,7 +281,7 @@ function Dashboard() {
                                       }
                                     />
                                     {location.name} - {viewers[location.name]} viewers
-                                    - ${location.price}
+                                    - ${viewers[location.name] * location.price}
                                   </label>
                                 </li>
                               ))}
@@ -364,7 +368,7 @@ function Dashboard() {
                                       }
                                     />
                                     {location.name} - {viewers[location.name]} viewers
-                                    - ${location.price}
+                                    - ${viewers[location.name] * location.price}
                                   </label>
                                 </li>
                               ))}
@@ -420,17 +424,17 @@ function Dashboard() {
               {/* Line chart (Acme Professional) */}
               <DashboardCard03 yearly={totalViewers * 365}/>
               {/* Bar chart (Direct vs Indirect) */}
-              <DashboardCard04 />
-              {/* Line chart (Real Time Value) */}
-              <DashboardCard05 />
+              {/* <DashboardCard04 /> */}
               {/* Doughnut chart (Top Countries) */}
               <DashboardCard06 adList={approved}/>
+              {/* Line chart (Real Time Value) */}
+              <DashboardCard05 viewers={viewers}/>
               {/* Table (Top Channels) */}
               <DashboardCard07 images={approved}/>
               {/* Line chart (Sales Over Time) */}
              
               {/* Stacked bar chart (Sales VS Refunds) */}
-              <DashboardCard09 />
+              {/* <DashboardCard09 /> */}
               {/* Card (Customers) */}
               <DashboardCard10 images={images} />
               {/* Card (Reasons for Refunds) */}

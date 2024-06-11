@@ -179,7 +179,7 @@ function RealtimeChart({ data, width, height }) {
       <div className="px-5 py-3">
         <div className="flex items-start">
           <div className="text-3xl font-bold text-slate-800 dark:text-slate-800 mr-2 tabular-nums">
-            $<span ref={chartValue}>57.81</span>
+            <span ref={chartValue}>57.81</span>
           </div>
           <div
             ref={chartDeviation}

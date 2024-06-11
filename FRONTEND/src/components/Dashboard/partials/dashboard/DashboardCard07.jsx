@@ -4,7 +4,7 @@ import locations from "../../../Locations";
 import {useUser} from '@clerk/clerk-react';
 
 function DashboardCard07({ images }) {
-
+  console.log(images)
   return (
     <div className="col-span-full xl:col-span-8 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
@@ -42,7 +42,7 @@ function DashboardCard07({ images }) {
                   <tr key={index}>
                     <td className="p-2">
                       <div className="flex items-center">
-                        <svg
+                        {/* <svg
                           className="shrink-0 mr-2 sm:mr-3"
                           width="36"
                           height="36"
@@ -54,7 +54,14 @@ function DashboardCard07({ images }) {
                             fill="#FFF"
                             fillRule="nonzero"
                           />
-                        </svg>
+                        </svg> */}
+                        {image.image_url.endsWith(".mp4") ||
+                        image.image_url.endsWith(".avi") ||
+                        image.image_url.endsWith(".mkv") ? (
+                          <img src={`./Assets/gallery.jpg`} alt="./Assets/gallery.jpg" style={{width:36, height:36, borderRadius: '50%', marginRight: 10}}/>
+                      ) : (
+                        <img src={`http://localhost:8000/uploads/${image.image_url}`} alt="./Assets/gallery.jpg" style={{width:36, height:36, borderRadius: '50%', marginRight: 10}}/>
+                      )}
                         <div className="text-slate-800 dark:text-slate-800">
                           {image.name}
                         </div>

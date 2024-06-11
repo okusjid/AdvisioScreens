@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import Tooltip from "../../components/Tooltip";
 import RealtimeChart from "../../charts/RealtimeChart";
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
+import locations from "../../../Locations";
 
-function DashboardCard05() {
-  // IMPORTANT:
-  // Code below is for demo purpose only, and it's not covered by support.
-  // If you need to replace dummy data with real data,
-  // refer to Chart.js documentation: https://www.chartjs.org/docs/latest
-
-  // Fake real-time data
+function DashboardCard05({ viewers }) {
   const [counter, setCounter] = useState(0);
   const [increment, setIncrement] = useState(0);
   const [range, setRange] = useState(35);
 
-  // Dummy data to be looped
   const data = [
     57.81, 57.75, 55.48, 54.28, 53.14, 52.25, 51.04, 52.49, 55.49, 56.87, 53.73,
     56.42, 58.06, 55.62, 58.16, 55.22, 58.67, 60.18, 61.31, 63.25, 65.91, 64.44,
@@ -28,7 +23,6 @@ function DashboardCard05() {
 
   const [slicedData, setSlicedData] = useState(data.slice(0, range));
 
-  // Generate fake dates from now to back in time
   const generateDates = () => {
     const now = new Date();
     const dates = [];
@@ -42,35 +36,38 @@ function DashboardCard05() {
     generateDates().slice(0, range).reverse()
   );
 
-  // Fake update every 2 seconds
+  const updateViewers = async () => {
+    try {
+      const response = await axios.post("http://localhost:8000/api/update-viewers/", locations);
+      const sum = Object.values(response.data).reduce((a, b) => a + b, 0);
+      return sum;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter(counter + 1);
-    }, 2000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [counter]);
 
-  // Loop through data array and update
   useEffect(() => {
-    setIncrement(increment + 1);
-    if (increment + range < data.length) {
-      setSlicedData(([x, ...slicedData]) => [
-        ...slicedData,
-        data[increment + range],
-      ]);
-    } else {
-      setIncrement(0);
-      setRange(0);
-    }
-    setSlicedLabels(([x, ...slicedLabels]) => [...slicedLabels, new Date()]);
-    return () => setIncrement(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const updateData = async () => {
+      const nextValue = await updateViewers();
+      if (nextValue !== null) {
+        setSlicedData(([x, ...slicedData]) => [...slicedData, nextValue]);
+        setSlicedLabels(([x, ...slicedLabels]) => [...slicedLabels, new Date()]);
+      }
+    };
+    updateData();
   }, [counter]);
 
   const chartData = {
     labels: slicedLabels,
     datasets: [
-      // Indigo line
       {
         data: slicedData,
         fill: true,
@@ -92,7 +89,7 @@ function DashboardCard05() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 bg-white rounded-md shadow-lg border border-slate-200 dark:border-slate-700 text-slate-800">
+    <div className="flex flex-col col-span-full sm:col-span-7 bg-white rounded-md shadow-lg border border-slate-200 dark:border-slate-700 text-slate-800">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center">
         <h2 className="font-semibold text-slate-800 dark:text-slate-800">
           Real Time Impressions on your Ads
@@ -111,8 +108,6 @@ function DashboardCard05() {
           </div>
         </Tooltip>
       </header>
-      {/* Chart built with Chart.js 3 */}
-      {/* Change the height attribute to adjust the chart height */}
       <RealtimeChart data={chartData} width={595} height={248} />
     </div>
   );

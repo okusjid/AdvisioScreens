@@ -47,7 +47,6 @@ class UploadImage(APIView):
     parser_classes = [MultiPartParser]
 
     def post(self, request):
-        print("UploadImage", request.data)
         loc_name = request.data["loc"]
         image = request.data["file"]
         user_id = request.data["user_id"]
@@ -67,8 +66,6 @@ class UploadVideo(APIView):
     parser_classes = [MultiPartParser]
 
     def post(self, request):
-
-        print("UploadVideo", request.data)
         loc_name = request.data["loc"]
         video = request.data["file"]
         user_id = request.data["user_id"]
@@ -84,11 +81,9 @@ class UploadVideo(APIView):
             )
 #get_all_images
 def get_all_images(request):
-    print("get_all_images")
     user_images = Upload.objects.all()
     images_data = []
     for img in user_images:
-        print(img.item.url[8:])
         images_data.append(
             {
                 "id": img.id,
@@ -135,11 +130,9 @@ def set_image_rejected(request):
 
 # get_all_rejected_images
 def get_all_rejected_images(request):
-    print("get_all_rejected_images")
     user_images = Upload.objects.filter(rejected=True)
     images_data = []
     for img in user_images:
-        print(img.item.url[8:])
         images_data.append(
             {
                 "id": img.id,
@@ -152,11 +145,9 @@ def get_all_rejected_images(request):
 
 # get_all_accepted_images
 def get_all_accepted_images(request):
-    print("get_all_accepted_images")
     user_images = Upload.objects.filter(approved=True)
     images_data = []
     for img in user_images:
-        print(img.item.url[8:])
         images_data.append(
             {
                 "id": img.id,
@@ -168,14 +159,12 @@ def get_all_accepted_images(request):
     return JsonResponse(images_data, safe=False)        
 
 def get_approved_images(request):
-    print("get_approved_images")
     if "user_id" in request.GET:
         user_images = Upload.objects.filter(
             clerk_id=request.GET["user_id"], approved=True
         )
         images_data = []
         for img in user_images:
-            print(img.item.url[8:])
             images_data.append(
                 {
                     "id": img.id,
@@ -190,14 +179,12 @@ def get_approved_images(request):
 
 
 def get_unapproved_images(request):
-    print("get_unapproved_images")
     if "user_id" in request.GET:
         user_images = Upload.objects.filter(
             clerk_id=request.GET["user_id"], approved=False, rejected=False
         )
         images_data = []
         for img in user_images:
-            print(img.item.url[8:])
             images_data.append(
                 {
                     "id": img.id,
@@ -212,14 +199,12 @@ def get_unapproved_images(request):
 
 
 def get_rejected_items(request):
-    print("get_unapproved_images")
     if "user_id" in request.GET:
         user_images = Upload.objects.filter(
             clerk_id=request.GET["user_id"], rejected=True
         )
         images_data = []
         for img in user_images:
-            print(img.item.url[8:])
             img.approved = False
             img.save()
             images_data.append(
@@ -239,8 +224,6 @@ class FeedbackView(APIView):
     parser_classes = [MultiPartParser]
 
     def post(self, request):
-
-        print("Feedback", request.data)
         item_id = request.data["image_id"]
         opt_id = request.data["option_id"]
         user_id = request.data["user_id"]
@@ -345,9 +328,7 @@ def get_user_data(request):
 def update_viewers(request):
     if request.method == 'POST':
         try:
-            print("Current working directory:", os.getcwd())
             data = json.loads(request.body)
-            print(data)
             results = {}
 
             for location in data:
