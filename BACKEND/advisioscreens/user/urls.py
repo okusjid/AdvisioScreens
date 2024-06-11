@@ -23,6 +23,7 @@ urlpatterns = [
     path('set-image-rejected/', views.set_image_rejected, name='set_image_rejected'),
     path('get-all-rejected-images/', views.get_all_rejected_images, name='get_all_rejected_images'),
     path('get-all-approved-images/', views.get_all_accepted_images, name='get_all_accepted_images'),
+    path('update-viewers/', views.update_viewers, name='update_viewers'),
     path('gamification/', views.update_gamification, name='update_gamification'),
     path('analyze-media/', analyze_media_view, name='analyze-media'),
 ]

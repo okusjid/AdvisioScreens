@@ -54,10 +54,14 @@ function DashboardCard10({images}) {
       spent: "$1,890.66",
     },
   ];
+
+  const handleImageError = (event) => {
+    event.target.src = './Assets/gallery.jpg'; // Fallback image URL
+  };
   
 
   return (
-    <div className="col-span-full xl:col-span-6 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">
+    <div className="col-span-full xl:col-span-4 bg-white dark:bg-white shadow-lg rounded-md border border-slate-200 dark:border-slate-700">
       <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
         <h2 className="font-semibold text-slate-800 dark:text-slate-800">
           Pending Ads
@@ -73,12 +77,12 @@ function DashboardCard10({images}) {
                 <th className="p-2 whitespace-nowrap">
                   <div className="font-semibold text-left">Ad Title</div>
                 </th>
-                <th className="p-2 whitespace-nowrap">
+                {/* <th className="p-2 whitespace-nowrap">
                   <div className="font-semibold text-left">Cost</div>
                 </th>
                 <th className="p-2 whitespace-nowrap">
                   <div className="font-semibold text-left">Impressions</div>
-                </th>
+                </th> */}
                 <th className="p-2 whitespace-nowrap">
                   <div className="font-semibold text-center">Location</div>
                 </th>
@@ -92,27 +96,27 @@ function DashboardCard10({images}) {
                     <td className="p-2 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
-                          <img
-                            className="rounded-full"
-                            src={customers[0].image}
-                            width="40"
-                            height="40"
-                            alt={image.name}
-                          />
+                        {image.image_url.endsWith(".mp4") ||
+                        image.image_url.endsWith(".avi") ||
+                        image.image_url.endsWith(".mkv") ? (
+                          <img src={`./Assets/gallery.jpg`} alt="./Assets/gallery.jpg" style={{width:36, height:36, borderRadius: '50%', marginRight: 10}}/>
+                      ) : (
+                        <img src={`http://localhost:8000/uploads/${image.image_url}`} onError={() => console.log('image not found')} alt="./Assets/gallery.jpg" style={{width:36, height:36, borderRadius: '50%', marginRight: 10}}/>
+                      )}
                         </div>
                         <div className="font-medium text-slate-800 dark:text-slate-800">
                         {image.name}
                         </div>
                       </div>
                     </td>
-                    <td className="p-2 whitespace-nowrap">
+                    {/* <td className="p-2 whitespace-nowrap">
                       <div className="text-left">NULL</div>
                     </td>
                     <td className="p-2 whitespace-nowrap">
                       <div className="text-left font-medium text-green-500">
                         NULL
                       </div>
-                    </td>
+                    </td> */}
                     <td className="p-2 whitespace-nowrap">
                       <div className="text-lg text-center">
                         {image.location}

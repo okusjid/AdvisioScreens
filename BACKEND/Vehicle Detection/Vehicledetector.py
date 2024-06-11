@@ -1,21 +1,35 @@
 import cv2
 import numpy as np
 import datetime
+import argparse
+import os
+
+parser = argparse.ArgumentParser(description="Vehicle Detection Script")
+parser.add_argument('video_file', help="Path to the input video file")
+parser.add_argument('log_file', help="Output log file name")
+
+args = parser.parse_args()
+
+default_video_source = args.video_file
+log_file_path = f"E:/Github/AdvisioScreensGIT/BACKEND/advisioscreens/files/{args.log_file}"
+
+if not os.path.isfile(default_video_source):
+    raise FileNotFoundError(f"Input video file not found: {default_video_source}")
 
 # Load YOLO
 net = cv2.dnn.readNet(
-    r"BACKEND\Vehicle Detection\yolov3.weights",
-    r"BACKEND\Vehicle Detection\yolov3.cfg"
+    r"yolov3.weights",
+    r"yolov3.cfg"
 )
 layer_names = net.getLayerNames()
 unconnected_out_layers = net.getUnconnectedOutLayers().flatten()
 output_layers = [layer_names[i - 1] for i in unconnected_out_layers]
 
-# Default video source is a video file. Change the path accordingly.
-default_video_source = r"BACKEND\Vehicle Detection\Video.mp4"
+# # Default video source is a video file. Change the path accordingly.
+# default_video_source = r"Video.mp4"
 
-# Log file for storing timestamp data
-log_file_path = 'traffic_log.txt'
+# # Log file for storing timestamp data
+# log_file_path = 'traffic_log.txt'
 
 # Uncomment the following line and comment out the default_video_source line above to switch to webcam input.
 # default_video_source = 0  # Typically 0 is the device index for the default webcam
@@ -72,6 +86,7 @@ def detect_vehicles(frame):
                 # Log timestamp and vehicle count
                 with open(log_file_path, 'a') as log_file:
                     log_file.write(f"{datetime.datetime.now()} {counter}\n")
+                    print(f"{datetime.datetime.now()} {counter}")
 
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
@@ -83,12 +98,12 @@ while True:
         break
 
     frame = detect_vehicles(frame)
-    cv2.putText(frame, "VEHICLE COUNT : " + str(counter), (450, 70), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 5)
-    cv2.line(frame, (25, count_line_position), (1200, count_line_position), (255, 127, 0), 3)  # Draw the counting line
-    cv2.imshow('Video Original', frame)
+    # cv2.putText(frame, "VEHICLE COUNT : " + str(counter), (450, 70), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 5)
+    # cv2.line(frame, (25, count_line_position), (1200, count_line_position), (255, 127, 0), 3)  # Draw the counting line
+    # cv2.imshow('Video Original', frame)
 
-    if cv2.waitKey(1) == 13:  # 13 is the Enter Key
-        break
+    # if cv2.waitKey(1) == 13:  # 13 is the Enter Key
+    #     break
 
 cap.release()
 cv2.destroyAllWindows()

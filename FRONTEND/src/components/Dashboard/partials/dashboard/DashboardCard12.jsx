@@ -16,8 +16,8 @@ function DashboardCard12({ locations }) {
             Today
           </header>
           <ul className="my-1">
-            {locations.map((location, index) => (
-                <li className="flex px-2" key={index}>
+            {Object.entries(locations).map(([name, views]) => (
+                <li className="flex px-2" key={name}>
                   <div className="w-9 h-9 rounded-full shrink-0 bg-indigo-500 my-2 mr-3">
                     <svg
                       className="w-9 h-9 fill-current text-indigo-50"
@@ -34,14 +34,14 @@ function DashboardCard12({ locations }) {
                           className="font-medium text-slate-800 hover:text-slate-900 dark:text-slate-800 dark:hover:text-white"
                           href="#0"
                         >
-                          {location.name}
+                          {name}
                         </a>{" "}
                         has{" "}
                         <a
                           className="font-medium text-slate-800 hover:text-slate-900 dark:text-slate-800 dark:hover:text-white"
                           href="#0"
                         >
-                          {location.viewers} 
+                          {views} 
                         </a>{" "}
                         viewers
                       </div>

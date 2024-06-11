@@ -88,7 +88,7 @@ DATABASES = {
         "USER": "postgres",
         "PASSWORD": "password123",
         "HOST": "localhost",  # Set to empty string for localhost.
-        "PORT": "5433",  # Set to empty string for default.
+        "PORT": "5432",  # Set to empty string for default.
     }
 }
 
@@ -135,10 +135,10 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True  # For development purposes
 
-CORS_ALLOW_ORIGINS = [
-    "http://localhost:5173",  # Replace with your React app's URL
-    # Add more origins as needed
-]
+# CORS_ALLOW_ORIGINS = [
+#     "http://localhost:5173",  # Replace with your React app's URL
+#     # Add more origins as needed
+# ]
 
 
 MEDIA_URL = "/uploads/"

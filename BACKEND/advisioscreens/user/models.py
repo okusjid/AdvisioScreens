@@ -21,6 +21,7 @@ class Upload(models.Model):
     name =  models.CharField(max_length=255,default="Empty")
     clerk_id = models.CharField(max_length=255)
     location = models.CharField(max_length=100)
+    viewers = models.IntegerField(default=0)
     item = models.FileField(upload_to="uploads/")
     approved = models.BooleanField(default=False)
     rejected = models.BooleanField(default=False)

@@ -32,6 +32,7 @@ function DoughnutChart({ data, width, height }) {
   useEffect(() => {
     const ctx = canvas.current;
     // eslint-disable-next-line no-unused-vars
+    // console.log('data', data)
     const newChart = new Chart(ctx, {
       type: "doughnut",
       data: data,
@@ -126,10 +127,11 @@ function DoughnutChart({ data, width, height }) {
         },
       ],
     });
+    // console.log(newChart)
     setChart(newChart);
     return () => newChart.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     if (!chart) return;

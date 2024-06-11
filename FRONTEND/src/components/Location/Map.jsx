@@ -12,6 +12,8 @@ import Navbar from "./Navbar";
 import geoLocation from "./utils/geoLocation";
 import redicon from "../../assets/Marker.png";
 import LocateMe from "./utils/locateme";
+import locations from "../Locations";
+
 function Map() {
   // Icon Styling
   const redIcon = new L.Icon({
@@ -27,18 +29,6 @@ function Map() {
 
   // Map Ref
   const [map, setMap] = useState(null);
-
-  // Destination Coordinates
-  let coordinates = [
-    [31.514104, 74.351377],
-    [31.5925, 74.3095],
-    [31.5109, 74.3416],
-    [31.516, 74.3429],
-    [31.4787,
-      74.416,],
-    [31.5497, 74.3436],
-    
-  ];
 
   // Current Location Center
   return (
@@ -63,11 +53,11 @@ function Map() {
             </Marker>
 
             {/* Destination Coordinates */}
-            {coordinates.map((coordinates, index) => {
+            {locations.map((loc, index) => {
               return (
-                <Marker position={coordinates}>
+                <Marker position={[loc.latitude, loc.longitude]}>
                   <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
+                    {loc.name}
                   </Popup>
                 </Marker>
               );
