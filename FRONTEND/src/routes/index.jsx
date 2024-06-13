@@ -4,6 +4,8 @@ import { SignedIn } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
+import ProtectedRoute from './ProtectedTarget';
+
 import Home from '../pages/Home';
 import Footer from '../components/Header-Footer/Footer';
 import Header from '../components/Header-Footer/Header';
@@ -11,11 +13,11 @@ import Contact from '../pages/Contact';
 import AboutPage from '../pages/AboutPage';
 import MediaOwner from '../pages/MediaOwner';
 import ErrorPage from '../pages/ErrorPage';
-import Howitworks from '../pages/How-it-works'; 
+import Howitworks from '../pages/How-it-works';
 import Cost from "../components/Cost/Cost";
 import AdminLayout from '../pages/Admin/Admin';
 import ErrorPage1 from '../pages/Admin/Errorpage';
-import Analytics from '../pages/Analytics'; 
+import Analytics from '../pages/Analytics';
 import FeedbackForm from '../pages/FeedbackForm';
 import UserManagementPage from '../components/Admin/UserManagementPage';
 import AdminContactMessages from '../components/Admin/AdminContactMessages';
@@ -47,7 +49,7 @@ const DefaultLayout = ({ children }) => {
 
 const Routing = () => {
   const role = useUserRole();
-  console.log("MeraRole",role);
+  console.log("MeraRole", role);
 
 
 
@@ -55,25 +57,26 @@ const Routing = () => {
     <Router>
       <Routes>
         
-        <Route path="/" element={<DefaultLayout><Home /></DefaultLayout>} />
-        <Route path="/contact" element={<DefaultLayout><Contact /></DefaultLayout>} />
-        <Route path="/about" element={<DefaultLayout><AboutPage /></DefaultLayout>} />
-        <Route path="/media-owners" element={<DefaultLayout><MediaOwner /></DefaultLayout>}/>
-        <Route path="/error" element={<DefaultLayout><ErrorPage /></DefaultLayout>}/>
-        <Route path='/howitworks' element={<DefaultLayout><Howitworks /></DefaultLayout>} />
-        <Route path='/gallery' element={<DefaultLayout><Gallery /></DefaultLayout>} />
-        <Route path="/cost" element={<DefaultLayout><Cost /></DefaultLayout>} />
-        <Route path="/Dashboard" element={<DefaultLayout><Dashboard1 /></DefaultLayout>} />
-        <Route path="/dashboard/analytics" element={<DefaultLayout><Analytics/></DefaultLayout>} />
-        <Route path="/dashboard/feedback-form" element={<DefaultLayout><FeedbackForm /></DefaultLayout>} />
-        <Route path="/locations" element={<DefaultLayout><Location /></DefaultLayout>} />
+        <Route path="/" element={<ProtectedRoute role={role}><DefaultLayout><Home /></DefaultLayout></ProtectedRoute>} />
+        <Route path='/howitworks' element={<ProtectedRoute role={role}><DefaultLayout><Howitworks /></DefaultLayout></ProtectedRoute>} /> 
+        <Route path="/contact" element={<ProtectedRoute role={role}><DefaultLayout><Contact /></DefaultLayout> </ProtectedRoute>}  />
+        <Route path="/about" element={<ProtectedRoute role={role}><DefaultLayout><AboutPage /></DefaultLayout> </ProtectedRoute>} />
+        <Route path="/media-owners" element={<ProtectedRoute role={role}><DefaultLayout><MediaOwner /></DefaultLayout> </ProtectedRoute>} />
+        <Route path="/error" element={<ProtectedRoute role={role}><DefaultLayout><ErrorPage /></DefaultLayout></ProtectedRoute>} />
+        <Route path='/gallery' element={<ProtectedRoute role={role}><DefaultLayout><Gallery /></DefaultLayout></ProtectedRoute>} />
+        <Route path="/cost" element={<ProtectedRoute role={role}><DefaultLayout><Cost /></DefaultLayout></ProtectedRoute>} />
+        <Route path="/Dashboard" element={<ProtectedRoute role={role}><DefaultLayout><Dashboard1 /></DefaultLayout></ProtectedRoute>} />
+        <Route path="/dashboard/analytics" element={<ProtectedRoute role={role}><DefaultLayout><Analytics /></DefaultLayout></ProtectedRoute>} />
+        <Route path="/dashboard/feedback-form" element={<ProtectedRoute role={role}><DefaultLayout><FeedbackForm /></DefaultLayout></ProtectedRoute>} />
+        <Route path="/locations" element={<ProtectedRoute role={role}><DefaultLayout><Location /></DefaultLayout></ProtectedRoute>} />
 
-        
-        <Route path='/blocked' element={<BlockedUserPage />} />
-        
-        
-        
-        <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>          
+
+        {role === 'blocked' &&
+          <Route path='/blocked' element={<BlockedUserPage />} />
+        }
+
+
+        <Route path="/admin" element={<ProtectedRoute role={role}><SignedIn><AdminLayout /></SignedIn></ProtectedRoute>}>
           <Route path="" element={<AdminHomePage />} />
           <Route path="contact-messages" element={<AdminContactMessages />} />
           <Route path='user-management' element={<UserManagementPage />} />
@@ -83,7 +86,7 @@ const Routing = () => {
           {/* <Route path="gamification" element={<AdminGamification />} /> */}
           <Route path="*" element={<ErrorPage1 />} />
 
-          
+
           {/* Add other admin nested routes here */}
         </Route>
         <Route path="*" element={<DefaultLayout><ErrorPage /></DefaultLayout>} />
