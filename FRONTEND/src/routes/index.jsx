@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import ProtectedRoute from './ProtectedTarget';
+import AdminProtected from './ProtectedAdmin';
 
 import Home from '../pages/Home';
 import Footer from '../components/Header-Footer/Footer';
@@ -49,7 +50,7 @@ const DefaultLayout = ({ children }) => {
 
 const Routing = () => {
   const role = useUserRole();
-  console.log("MeraRole", role);
+  // console.log("MeraRole", role);
 
 
 
@@ -76,7 +77,7 @@ const Routing = () => {
         }
 
 
-        <Route path="/admin" element={<ProtectedRoute role={role}><SignedIn><AdminLayout /></SignedIn></ProtectedRoute>}>
+        <Route path="/admin" element={<ProtectedRoute role={role}><AdminProtected role={role}><SignedIn><AdminLayout /></SignedIn></AdminProtected></ProtectedRoute>}>
           <Route path="" element={<AdminHomePage />} />
           <Route path="contact-messages" element={<AdminContactMessages />} />
           <Route path='user-management' element={<UserManagementPage />} />
