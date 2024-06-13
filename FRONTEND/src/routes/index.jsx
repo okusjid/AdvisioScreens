@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SignedIn } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import Home from '../pages/Home';
 import Footer from '../components/Header-Footer/Footer';
@@ -24,8 +26,11 @@ import Dashboard1 from '../components/Dashboard/Dashboard1';
 import Location from '../pages/Location';
 import AdminMediaLibrary from '../components/Admin/Admin-MediaLibrary';
 import FeedbackCollection from '../components/Admin/Admin-Feedback';
-import AdminGamification from '../components/Admin/Admin-Gamification';
+// import AdminGamification from '../components/Admin/Admin-Gamification';
+import BlockedUserPage from '../pages/BlockedUser';
 
+// get role
+import { useUserRole } from './UserRole';
 
 const DefaultLayout = ({ children }) => {
   return (
@@ -39,34 +44,44 @@ const DefaultLayout = ({ children }) => {
   );
 };
 
+
 const Routing = () => {
+  const role = useUserRole();
+  console.log("MeraRole",role);
+
+
+
   return (
     <Router>
       <Routes>
+        
         <Route path="/" element={<DefaultLayout><Home /></DefaultLayout>} />
         <Route path="/contact" element={<DefaultLayout><Contact /></DefaultLayout>} />
         <Route path="/about" element={<DefaultLayout><AboutPage /></DefaultLayout>} />
-        
         <Route path="/media-owners" element={<DefaultLayout><MediaOwner /></DefaultLayout>}/>
         <Route path="/error" element={<DefaultLayout><ErrorPage /></DefaultLayout>}/>
         <Route path='/howitworks' element={<DefaultLayout><Howitworks /></DefaultLayout>} />
         <Route path='/gallery' element={<DefaultLayout><Gallery /></DefaultLayout>} />
         <Route path="/cost" element={<DefaultLayout><Cost /></DefaultLayout>} />
-        <Route path="/Dashboard" element={<Dashboard1 />} />
-        
-        <Route path="/dashboard/analytics" element={<Analytics/>} />
-        <Route path="/dashboard/feedback-form" element={<FeedbackForm />} />
+        <Route path="/Dashboard" element={<DefaultLayout><Dashboard1 /></DefaultLayout>} />
+        <Route path="/dashboard/analytics" element={<DefaultLayout><Analytics/></DefaultLayout>} />
+        <Route path="/dashboard/feedback-form" element={<DefaultLayout><FeedbackForm /></DefaultLayout>} />
         <Route path="/locations" element={<DefaultLayout><Location /></DefaultLayout>} />
+
+        
+        <Route path='/blocked' element={<BlockedUserPage />} />
+        
+        
+        
         <Route path="/admin" element={<SignedIn><AdminLayout /></SignedIn>}>          
+          <Route path="" element={<AdminHomePage />} />
           <Route path="contact-messages" element={<AdminContactMessages />} />
           <Route path='user-management' element={<UserManagementPage />} />
           <Route path='ad-management' element={<AdManagement />} />
-          <Route path="" element={<AdminHomePage />} />
           <Route path="media-library" element={<AdminMediaLibrary />} />
           <Route path='feedback-collection' element={<FeedbackCollection />} />
           {/* <Route path="gamification" element={<AdminGamification />} /> */}
           <Route path="*" element={<ErrorPage1 />} />
-         
 
           
           {/* Add other admin nested routes here */}

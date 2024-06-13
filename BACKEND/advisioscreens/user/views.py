@@ -154,6 +154,8 @@ def save_user_data(request):
     else:
         return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
 
+
+
 class UploadImage(APIView):
     parser_classes = [MultiPartParser]
 
