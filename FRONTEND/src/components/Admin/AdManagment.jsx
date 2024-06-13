@@ -7,6 +7,9 @@ const ImageManagement = () => {
   // const [rejectedImages, setRejectedImages] = useState([]);
   const [filter, setFilter] = useState('all');
   const [mediaFilter, setMediaFilter] = useState('all'); // Added media filter state
+  const [error, setError] = useState(null);
+  const [report, setReport] = useState(null);
+  const [showReport, setShowReport] = useState(false);
 
   // Filter buttons for media type
   const filterMedia = (mediaType) => {
@@ -18,6 +21,80 @@ const ImageManagement = () => {
     const extension = mediaUrl.split('.').pop().toLowerCase();
     return extension === 'mp4' ? 'video' : 'image';
   };
+
+  const handleReportCreation = async (mediaurl) => {
+    console.log("url is: ", mediaurl);
+    // send the url to the backend
+    try {
+      // Correctly escape the backslash and declare processedurl with const or let
+      const processedurl = mediaurl.replace(/\//g, "\\");
+      console.log("Processed URL:", processedurl); // Added this line to check the processed URL
+  
+      const response = await fetch('http://localhost:8000/api/analyze-media/', {
+        method: 'POST',
+        body: JSON.stringify({ media_path: processedurl }), // Send the processed URL
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json(); // Correctly call json() as a method
+      console.log("Response Data:", data);
+      setReport(data);
+      setShowReport(true);
+      
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
+  
+  // Display the report
+  const ReportDisplay = () => (
+    <div className="bg-gradient-to-br from-gray-100 to-blue-50 text-gray-800 px-5 py-4 rounded-lg shadow-2xl mx-auto my-6 max-w-4xl relative transition-all duration-300 ease-in-out">
+      <button 
+        onClick={() => setShowReport(false)} 
+        className="absolute top-3 right-3 text-gray-600 hover:text-red-600 transition-colors duration-300 ease-in-out text-2xl"
+      >
+        &times;
+      </button>
+      <h2 className="text-2xl font-bold mb-5 text-blue-900">Analysis Report</h2>
+      {report.alerts ? (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left text-gray-600">
+            <thead className="text-xs text-gray-700 uppercase bg-blue-100">
+              <tr>
+                <th scope="col" className="py-3 px-6">
+                  Type
+                </th>
+                <th scope="col" className="py-3 px-6">
+                  Details
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {report.alerts.map((alert, index) => (
+                <tr key={index} className="hover:bg-blue-50">
+                  <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                    Alert {index + 1}
+                  </td>
+                  <td className="py-4 px-6">
+                    {alert}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="text-sm text-gray-600">{report}</p>
+      )}
+    </div>
+  );
+  
 
   useEffect(() => {
     fetchData();
@@ -105,6 +182,8 @@ const ImageManagement = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold mb-6">Ad Management</h2>
+      {error && <div className="text-red-500">{error}</div>}
+      {showReport && <ReportDisplay />}
       {/* Filter Buttons */}
       <div className="flex justify-center space-x-4 mb-8">
         <button onClick={() => filterImages('all')} className={`px-6 py-2 rounded-md transition duration-300 ${filter === 'all' ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>All</button>
@@ -137,6 +216,14 @@ const ImageManagement = () => {
                 Location: {image.location}
               </p>
             </div>
+            
+            {/* Generate Report button*/}
+            <button
+              onClick={() => handleReportCreation(image.image_url)}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out w-full text-center uppercase font-semibold tracking-wider focus:outline-none focus:ring focus:ring-blue-500 mt-4 hover:shadow-md"
+            >
+              Generate Report
+            </button>
             {/* Image status and actions */}
             <div className="p-4 flex justify-between items-center">
               <span className={`${image.approved ? 'text-green-500 font-semibold' : image.rejected ? 'text-red-500 font-semibold' : 'font-semibold'}`}>
