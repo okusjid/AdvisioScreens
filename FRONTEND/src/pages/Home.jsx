@@ -79,10 +79,10 @@ const Home = () => {
         console.log('Blocked User Page');
         navigate('/blocked');
       }
-      else {
-        console.log('Redirecting to user page');
-        navigate('/'); // Redirect to user page for non-admin users
-      }
+      // else {
+      //   console.log('Redirecting to user page');
+      //   navigate('/'); // Redirect to user page for non-admin users
+      // }
     }
   }, [isSignedIn, userRole, navigate]);
 
